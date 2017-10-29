@@ -23,7 +23,7 @@ char *createMessage(char *message, ...){
 void testAssertEqualNode(Node *node, Node *left, Node *right, int bf ,int lineNo){
   char *error;
   if(left != NULL){
-    if(node->left == NULL){
+    if(node->left != left){
       error = createMessage("Expected left node to be 0x%p, but was %p",  \
                             left,node->left);
     UNITY_TEST_FAIL(lineNo,error);
@@ -31,7 +31,7 @@ void testAssertEqualNode(Node *node, Node *left, Node *right, int bf ,int lineNo
   }
 
   if(right != NULL){
-    if(node->right == NULL){
+    if(node->right != right){
       error = createMessage("Expected right node to be 0x%p, but was %p",  \
                             right,node->right);
     UNITY_TEST_FAIL(lineNo,error);

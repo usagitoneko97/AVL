@@ -13,6 +13,7 @@ void addAvl(Node **rootPtr, Node *nodeToAdd){
     }
     else{
         addAvl(&(*(rootPtr))->right, nodeToAdd);
+        (*rootPtr)->bf ++;
     }
   }
   else{
@@ -22,6 +23,7 @@ void addAvl(Node **rootPtr, Node *nodeToAdd){
     }
     else{
         addAvl(&(*(rootPtr))->left, nodeToAdd);
+        (*rootPtr)->bf --;
       }
   }
 

@@ -58,9 +58,31 @@ void test_AddAvl_given_node5_add_node1(void){
  *                               node10
  */
 void test_AddAvl_given_node1_node5_add_node10(void){
-  initNode(&node1, NULL, &node5, 0);
+  initNode(&node1, NULL, &node5, 1);
   initNode(&node5, NULL, NULL, 0);
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node1;
+  addAvl(&root, &node10);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL, &node10, 1);
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL, &node5, 2);
+}
+
+/**
+ *        node10 (1)          node10 (-2)
+ *        /          --->    /
+ *     node5               node5  (-1)
+ *                         /
+ *                        node1  (0)
+ */
+void test_AddAvl_given_node10_node5_add_node1(void){
+  initNode(&node10, &node5, NULL, -1);
+
+  initNode(&node5, NULL, NULL, 0);
+  initNode(&node1, NULL, NULL, 0);
+
+  Node *root = &node10;
+  addAvl(&root, &node1);
+  TEST_ASSERT_EQUAL_NODE(&node5, &node1, NULL, -1);
+  TEST_ASSERT_EQUAL_NODE(&node10,&node5 , NULL, -2);
 }
