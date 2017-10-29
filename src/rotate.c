@@ -73,21 +73,25 @@ Node *rotateRightLeft(Node *node){
 int calcBF(Node *root){
   int leftHeight, rightHeight;
   if(root->left == NULL)
-    leftHeight = 0;
+    leftHeight = -1;
   else
     leftHeight = nodeHeight(root->left);
   if(root->right == NULL){
-    rightHeight = 0;
+    rightHeight = -1;
   }
   else
     rightHeight = nodeHeight(root->right);
-  return rightHeight-leftHeight;
+  return (rightHeight-leftHeight);
 }
 
 int nodeHeight(Node *root){
   if(root == NULL){
     return -1;
   }
-  return 1+(nodeHeight(root->left)>nodeHeight(root->right)?
-            nodeHeight(root->left):nodeHeight(root->right));
+  if(nodeHeight(root->left) > nodeHeight(root->right)){
+    return (1+nodeHeight(root->left));
+  }
+  else{
+    return (1+nodeHeight(root->right));
+  }
 }

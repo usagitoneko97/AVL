@@ -155,9 +155,11 @@ void test_addAvl_given_above_expect_rotateRL(void){
   Node *root = &node5;
   addAvl(&root, &node15);
 
-  TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 0);
-  TEST_ASSERT_EQUAL_NODE(&node15, &node10 , &node20, 2);
-  TEST_ASSERT_EQUAL_NODE(&node1, NULL , NULL, -1);
-  TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, -1);
+  TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 1);
+  TEST_ASSERT_EQUAL_NODE(&node15, &node10 , &node20, 0);
+
+  //TODO change bf after rotate
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL , NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 2);
   TEST_ASSERT_EQUAL_NODE(&node20, NULL , NULL, -1);
 }

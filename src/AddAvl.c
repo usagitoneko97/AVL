@@ -13,11 +13,13 @@ Node *addAvl(Node **rootPtr, Node *nodeToAdd){
       if((*rootPtr)->bf > 1){
         if((*rootPtr)->right->bf < 0){
           //rotate right left
-          (*rootPtr)->right = rotateRightLeft(*rootPtr);
+          return rotateRightLeft(*rootPtr);
 
         }
+        else{
         //rotate left
-        (*rootPtr)->right = rotateLeft(*rootPtr);
+          return rotateLeft(*rootPtr);
+        }
       }
     }
     else{
@@ -26,11 +28,14 @@ Node *addAvl(Node **rootPtr, Node *nodeToAdd){
       if((*rootPtr)->bf < -1){
         if((*rootPtr)->left->bf > 0){
           //rotate left right
-          (*rootPtr)->left = rotateleftRight(*rootPtr);
+          return  rotateleftRight(*rootPtr);
         }
+        else{
         //rotate right
-        (*rootPtr)->left = rotateRight(*rootPtr);
+          return  rotateRight(*rootPtr);
+        }
       }
     }
+    return (*rootPtr);
   }
 }

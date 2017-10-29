@@ -100,3 +100,56 @@ void test_rotateLeftRight(void){
   TEST_ASSERT_EQUAL_PTR(NULL, node50.right);
   TEST_ASSERT_EQUAL_PTR(NULL, node50.left);
 }
+
+/**
+ *     1
+ *      \
+ *       5
+ */
+void test_nodeHeight_given_1(void){
+  initNode(&node1, NULL, &node5, 1);
+  initNode(&node5, NULL, NULL, 0);
+
+  int height = nodeHeight(&node1);
+
+  TEST_ASSERT_EQUAL(1, height);
+}
+
+/**
+ *      1
+ *       \
+ *        5
+ *         \
+ *          10
+ *           \
+ *            20
+ */
+void test_nodeHeight_given_3(void){
+  initNode(&node1, NULL, &node5, 3);
+  initNode(&node5, NULL, &node10, 2);
+  initNode(&node10, NULL, &node20, 1);
+  initNode(&node20, NULL, NULL, 0);
+
+  TEST_ASSERT_EQUAL(3, nodeHeight(&node1));
+}
+
+/**
+ *         25
+ *        /  \
+ *       20   30
+ *      /     \
+ *     15     35
+ *    /
+ *  10
+ */
+void test_nodeHeight_given_above(void){
+  initNode(&node25, &node20, &node30, -1);
+  initNode(&node20, &node15, NULL, -2);
+  initNode(&node15, &node10, NULL, 2);
+  initNode(&node10, NULL, NULL, 1);
+
+  initNode(&node30, NULL, &node35, 0);
+  initNode(&node35, NULL, NULL, 3);
+
+  TEST_ASSERT_EQUAL(3, nodeHeight(&node25));
+}
