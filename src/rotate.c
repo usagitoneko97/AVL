@@ -58,3 +58,12 @@ Node *rotateleftRight(Node *node){
   root = rotateRight(node);
   return root;
 }
+
+//TODO test for this func
+Node *rotateRightLeft(Node *node){
+  Node *root, *temp;
+  temp = rotateRight(node->right);
+  node->right = temp;
+  root = rotateLeft(node);
+  return root;
+}
