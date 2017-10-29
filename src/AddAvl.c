@@ -1,27 +1,27 @@
 #include "AddAvl.h"
 #include "rotate.h"
-void addAvl(Node **rootPtr, Node *nodeToAdd){
+Node *addAvl(Node **rootPtr, Node *nodeToAdd){
   if(*(rootPtr) == NULL){
     *rootPtr = nodeToAdd;
-    return;
+    return (*rootPtr);
   }
   if(nodeToAdd->data > (*(rootPtr))->data){
     // addAvl(&(*(rootPtr))->right, nodeToAdd);
     if((*rootPtr)->right == NULL){
       (*rootPtr)->right = nodeToAdd;
       (*rootPtr)->bf++;
+      return (*rootPtr);
     }
     else{
-        addAvl(&(*(rootPtr))->right, nodeToAdd);
+        (*rootPtr)->right = addAvl(&(*(rootPtr))->right, nodeToAdd);
         (*rootPtr)->bf++;
         if((*rootPtr)->bf >=2){
           if((*rootPtr)->right->bf < 0){
-            rotateRightLeft(*(rootPtr));
+            return rotateRightLeft(*(rootPtr));
           }
           else{
-            rotateLeft(*(rootPtr));
+            return rotateLeft(*(rootPtr));
           }
-
         }
 
     }
@@ -30,6 +30,7 @@ void addAvl(Node **rootPtr, Node *nodeToAdd){
     if((*rootPtr)->left == NULL){
       (*rootPtr)->left = nodeToAdd;
       (*rootPtr)->bf--;
+      return (*rootPtr);
     }
     else{
         addAvl(&(*(rootPtr))->left, nodeToAdd);
