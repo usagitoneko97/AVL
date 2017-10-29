@@ -6,4 +6,6 @@ Node *rotateLeft(Node *root);
 Node *rotateRight(Node *root);
 Node *rotateleftRight(Node *node);
 Node *rotateRightLeft(Node *node);
+int calcBF(Node *root);
+int nodeHeight(Node *root);
 #endif // _ROTATE_H

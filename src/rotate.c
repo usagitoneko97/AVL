@@ -38,6 +38,8 @@ Node *rotateRight(Node *node){
     node->left = NULL;
   }
     root->right = node;
+
+
   return root;
 }
 
@@ -66,4 +68,26 @@ Node *rotateRightLeft(Node *node){
   node->right = temp;
   root = rotateLeft(node);
   return root;
+}
+
+int calcBF(Node *root){
+  int leftHeight, rightHeight;
+  if(root->left == NULL)
+    leftHeight = 0;
+  else
+    leftHeight = nodeHeight(root->left);
+  if(root->right == NULL){
+    rightHeight = 0;
+  }
+  else
+    rightHeight = nodeHeight(root->right);
+  return rightHeight-leftHeight;
+}
+
+int nodeHeight(Node *root){
+  if(root == NULL){
+    return -1;
+  }
+  return 1+(nodeHeight(root->left)>nodeHeight(root->right)?
+            nodeHeight(root->left):nodeHeight(root->right));
 }
