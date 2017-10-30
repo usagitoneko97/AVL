@@ -12,14 +12,11 @@ void setUp(void)
 void tearDown(void)
 {
 }
-
+// NOTE :balance factor will not changed since its not handle by rotation
+//     func
 
 /**
- *    Scenario : Node = -2
- *               child Node = -1
- *    Expected : Node = 0
- *               child Node = 0
- *
+ *      func
  *       30(-2)         10(0)
  *      /              /  \
  *    10(-1)  ---->   5   30(0)
@@ -34,15 +31,16 @@ void test_rotateRight_m2_m1(void){
   Node *root;
   root = rotateRight(&node30);
 
-  TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, 0);
-  TEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, -1);
+  TEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, -2);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
 }
 /**
  * Scenario : Node = -2
  *          : child Node = 0
- * expected : Node = 1
- *            child Node = -1
+ * expected : normal rotation at pivot node30,
+ *            node20 is transfered to left side of node30
+ *
  *
  *       30(-2)         10(1)
  *      /              /  \
@@ -58,8 +56,8 @@ void test_rotateRight_m2_m0(void)
     initNode(&node20, NULL, NULL, 0);
     Node *root;
     root = rotateRight(&node30);
-    TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, 1);
-    TEST_ASSERT_EQUAL_NODE(&node30, &node20, NULL, -1);
+    TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, 0);
+    TEST_ASSERT_EQUAL_NODE(&node30, &node20, NULL, -2);
     TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
 
 }
@@ -67,8 +65,8 @@ void test_rotateRight_m2_m0(void)
 /**
  * Scenario : Node = 2
  *          : child Node = 1
- * expected : Node = 0
- *            child Node = 0
+ * expected : normal rotation, no child get transfered
+ *
  *     5                 10
  *      \               /  \
  *       10    --->    5   20
@@ -82,16 +80,16 @@ void test_rotateLeft_p2_p1(void){
 
   rotateLeft(&node5);
 
-  TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node20, 0);
-  TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node20, 1);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 2);
   TEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, 0);
 }
 
 /**
  * Scenario : Node = -2
  *          : child Node = 0
- * expected : Node = 1
- *            child Node = -1
+ * expected : normal rotation. node30 get transfered to right of node25
+ *
  *       25(2)                   35
  *        \                     /  \
  *        35(0)         ----> 25   40
@@ -106,16 +104,10 @@ void test_rotateLeft_p2_p0(void){
 
   Node *root;
   root = rotateLeft(&node25);
-  TEST_ASSERT_EQUAL_PTR(&node35, root);
-  TEST_ASSERT_EQUAL_PTR(&node25, root->left);
-  TEST_ASSERT_EQUAL_PTR(&node40, root->right);
-  TEST_ASSERT_EQUAL_PTR(NULL, node25.left);
-  TEST_ASSERT_EQUAL_PTR(&node30, node25.right);
-
-  TEST_ASSERT_EQUAL_PTR(NULL, node30.right);
-  TEST_ASSERT_EQUAL_PTR(NULL, node30.left);
-  TEST_ASSERT_EQUAL_PTR(NULL, node40.right);
-  TEST_ASSERT_EQUAL_PTR(NULL, node40.left);
+  TEST_ASSERT_EQUAL_NODE(&node35, &node25, &node40, 0);
+  TEST_ASSERT_EQUAL_NODE(&node25, NULL, &node30, 0);
+  TEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, 0);
 }
 
 /**
@@ -124,38 +116,69 @@ void test_rotateLeft_p2_p0(void){
  *            child Node = 1
  *            grandchild Node = 1
  * Expected :
- *     30(-2)                     15 (0)
- *    /     \                    /  \
- *   10(1)  50       ---->   10(-1) 30(0)
- *  / \                       /    /  \
- * 5  15(1)                 5    20   50
- *     \
- *     20
+ *          left right rotation at pivot node30, node20 get transfered to left
+ *          of node30
+ *     45(-2)                     35 (0)
+ *    /     \                    /    \
+ *   25(1)  50       ---->   25(-1)   45(0)
+ *  / \                       / \     /  \
+ * 5  35(0)                 5   30   40   50
+ *   /  \
+ *  30  40
  */
 void test_rotateLeftRight(void){
-  initNode(&node20, NULL, NULL, 0);
+  initNode(&node45, &node25, &node50, 0);
+  initNode(&node25, &node5, &node35, 0);
+  initNode(&node35,&node30 ,&node40, 0);
   initNode(&node5, NULL, NULL, 0);
+  initNode(&node30, NULL, NULL, 0);
+  initNode(&node40, NULL, NULL, 0);
   initNode(&node50, NULL, NULL, 0);
-  initNode(&node15, NULL, &node20, 0);
-  initNode(&node10, &node5, &node15, 0);
-  initNode(&node30,&node10 ,&node50, 0);
 
   Node *root;
-  root = rotateleftRight(&node30);
-  TEST_ASSERT_EQUAL_PTR(&node15, root);
-  TEST_ASSERT_EQUAL_PTR(&node10, root->left);
-  TEST_ASSERT_EQUAL_PTR(&node30, root->right);
-  TEST_ASSERT_EQUAL_PTR(&node20, node30.left);
-  TEST_ASSERT_EQUAL_PTR(&node50, node30.right);
-  TEST_ASSERT_EQUAL_PTR(&node5, node10.left);
-  TEST_ASSERT_EQUAL_PTR(NULL, node10.right);
+  root = rotateleftRight(&node45);
 
-  TEST_ASSERT_EQUAL_PTR(NULL, node5.right);
-  TEST_ASSERT_EQUAL_PTR(NULL, node5.left);
-  TEST_ASSERT_EQUAL_PTR(NULL, node20.right);
-  TEST_ASSERT_EQUAL_PTR(NULL, node20.left);
-  TEST_ASSERT_EQUAL_PTR(NULL, node50.right);
-  TEST_ASSERT_EQUAL_PTR(NULL, node50.left);
+  TEST_ASSERT_EQUAL_NODE(&node35, &node25, &node45, 0);
+  TEST_ASSERT_EQUAL_NODE(&node25, &node5, &node30, 0);
+  TEST_ASSERT_EQUAL_NODE(&node45, &node40, &node50, 0);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node40, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, 0);
+}
+
+/**
+ * scenario : node = 2
+ *            childNode = -1
+ *            grandChild Node = -1
+ * expected : rotate right left at pivot 10, node15 get transfered to right of node10,
+ *            node23 get transfered tp left of node 25
+ *
+ *
+ *          10(2)                          20(0)
+ *        /   \                          /   \
+ *       5    25(-1)          --->    10(0) 25(0)
+ *            /    \                  / \     /  \
+ *          20(0)  50                5  15   23  50
+ *         / \
+ *        15  23
+ */
+void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_0(void){
+  initNode(&node10, &node5 ,&node25, 0);
+  initNode(&node5, NULL, NULL, 0);
+  initNode(&node25, &node20, &node50, 0);
+  initNode(&node20, &node15, &node23, 0);
+  initNode(&node23, NULL, NULL, 0);
+  initNode(&node50, NULL, NULL, 0);
+
+  rotateRightLeft(&node10);
+
+  TEST_ASSERT_EQUAL_NODE(&node20, &node10, &node25, 0);
+  TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
+  TEST_ASSERT_EQUAL_NODE(&node25, &node23, &node50, 0);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node23, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node50, NULL, NULL, 0);
 }
 
 /**

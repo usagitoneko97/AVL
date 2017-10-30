@@ -261,7 +261,7 @@ void test_avlBalanceRightTree_given_25_35_30_40(void){
   initNode(&node30, NULL, NULL, 0);
   initNode(&node40, NULL, NULL, 0);
   initNode(&node35, &node30, &node40, 0);
-  initNode(&node25,NULL ,&node35, 0);
+  initNode(&node25,NULL ,&node35, 2);
 
   Node *root;
   root = (&node25);
