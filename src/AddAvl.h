@@ -4,7 +4,7 @@
 
 #define CHANGED     1
 #define NO_CHANGED  0
-int *addAvl(Node **root, Node *nodeToAdd);
+int addAvl(Node **root, Node *nodeToAdd);
 int avlBalanceLeftTree(Node **rootPtr);
 int avlBalanceRightTree(Node **rootPtr);
 

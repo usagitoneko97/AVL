@@ -150,7 +150,7 @@ void test_addAvl_given_node5_node15_add_node10_expect_rotateRL(void){
  */
 void test_addAvl_given_above_expect_rotateRL(void){
   initNode(&node5, &node1, &node10, 1);
-  initNode(&node10, NULL, &node20, 0);
+  initNode(&node10, NULL, &node20, 1);
   initNode(&node1, NULL, NULL, 0);
   initNode(&node20, NULL, NULL, 0);
   initNode(&node15, NULL, NULL, 0);
