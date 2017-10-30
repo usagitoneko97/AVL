@@ -1,33 +1,35 @@
 #include "AddAvl.h"
 #include "rotate.h"
-Node *addAvl(Node **rootPtr, Node *nodeToAdd){
+
+int heightChanged;
+int *addAvl(Node **rootPtr, Node *nodeToAdd){
   if(*(rootPtr) == NULL){
     *rootPtr = nodeToAdd;
-    return (*rootPtr);
+    return CHANGED;
   }
   else{
     if(nodeToAdd->data > (*(rootPtr))->data){
-      (*rootPtr)->right = addAvl(&(*(rootPtr))->right, nodeToAdd);
+      heightChanged = addAvl(&(*(rootPtr))->right, nodeToAdd);
+      (*rootPtr)->right = (*rootPtr);
       //calc bf
       // (*rootPtr)->bf ++;
-       (*rootPtr)->bf = calcBF(*rootPtr);
-      avlBalanceRightTree(rootPtr);
-      // (*rootPtr)->bf = calcBF(*rootPtr);
-      return (*rootPtr);
+      if(heightChanged == CHANGED)
+        (*rootPtr)->bf ++;
+      //  (*rootPtr)->bf = calcBF(*rootPtr);
+      return avlBalanceRightTree(rootPtr);
     }
     else{
-      (*rootPtr)->left = addAvl(&(*(rootPtr))->left, nodeToAdd);
-      // (*rootPtr)->bf --;
-       (*rootPtr)->bf = calcBF(*rootPtr);
+      heightChanged = addAvl(&(*(rootPtr))->left, nodeToAdd);
+      if(heightChanged == CHANGED)
+        (*rootPtr)->bf --;
       avlBalanceLeftTree(rootPtr);
-      // (*rootPtr)->bf = calcBF(*rootPtr);
       return (*rootPtr);
     }
     return (*rootPtr);
   }
 }
 
-void avlBalanceRightTree(Node **rootPtr){
+int avlBalanceRightTree(Node **rootPtr){
 
   if((*rootPtr)->bf <= 1)
     return;
@@ -68,9 +70,9 @@ void avlBalanceRightTree(Node **rootPtr){
   }
 }
 
-void avlBalanceLeftTree(Node **rootPtr){
+int avlBalanceLeftTree(Node **rootPtr){
   if((*rootPtr)->bf >= -1)
-    return;
+    return CHANGED;
   if((*rootPtr)->left->bf > 0){
     //rotate left right
     (*rootPtr) = rotateleftRight(*rootPtr);
@@ -106,4 +108,5 @@ void avlBalanceLeftTree(Node **rootPtr){
         break;
     }
   }
+  return NO_CHANGED;
 }

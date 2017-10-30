@@ -174,6 +174,7 @@ void test_addAvl_given_above_expect_rotateRL(void){
  *               child Node = -1
  *    Expected : Node = 0
  *               child Node = 0
+ *               heightChanged = true
  *
  *       30(-2)         10(0)
  *      /              /  \
@@ -199,7 +200,7 @@ void test_avlBalanceLeftTree_given_30_10_5(void){
  *          : child Node = 0
  * expected : Node = 1
  *            child Node = -1
- *
+ *            heightChanged = true
  *       30(-2)         10(1)
  *      /              /  \
  *    10(0)   ---->   5   30

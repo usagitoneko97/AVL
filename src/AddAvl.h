@@ -2,11 +2,11 @@
 #define _ADDAVL_H
 #include "Node.h"
 
-#define RIGHT   0
-#define LEFT    1
-Node *addAvl(Node **root, Node *nodeToAdd);
-void avlBalanceLeftTree(Node **rootPtr);
-void avlBalanceRightTree(Node **rootPtr);
+#define CHANGED     1
+#define NO_CHANGED  0
+int *addAvl(Node **root, Node *nodeToAdd);
+int avlBalanceLeftTree(Node **rootPtr);
+int avlBalanceRightTree(Node **rootPtr);
 
 
 #endif // _ADDAVL_H
