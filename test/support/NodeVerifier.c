@@ -26,10 +26,16 @@ void testAssertEqualNode(Node *node, Node *left, Node *right, int bf ,int lineNo
     if(node->left != left){
       error = createMessage("Expected left node to be 0x%p, but was %p",  \
                             left,node->left);
-    UNITY_TEST_FAIL(lineNo,error);
+      UNITY_TEST_FAIL(lineNo,error);
     }
   }
-
+  else{
+    if(node->left != NULL){
+      error = createMessage("Expected left node to be NULL, but was %p",  \
+                            node->left);
+      UNITY_TEST_FAIL(lineNo,error);
+    }
+  }
   if(right != NULL){
     if(node->right != right){
       error = createMessage("Expected right node to be 0x%p, but was %p",  \
@@ -37,9 +43,18 @@ void testAssertEqualNode(Node *node, Node *left, Node *right, int bf ,int lineNo
     UNITY_TEST_FAIL(lineNo,error);
     }
   }
+  else{
+    if(node->right != NULL){
+      error = createMessage("Expected right node to be NULL, but was %p",  \
+                            node->right);
+      UNITY_TEST_FAIL(lineNo,error);
+    }
+  }
   if(bf != node->bf){
     error = createMessage("Expected balance factor to be %d, but was %d",  \
                             bf, node->bf);
     UNITY_TEST_FAIL(lineNo,error);
   }
+
+
 }

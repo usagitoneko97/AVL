@@ -30,7 +30,7 @@ void test_AddAvl_given_NULL_add_1Node(void)
  */
 void test_AddAvl_given_node1_add_node5(void){
   initNode(&node1, NULL, NULL, 0);
-  initNode(&node5, NULL, NULL, 0);
+  initNode(&node5, &node5, &node5, 0);
 
   Node *root = &node1;
   addAvl(&root, &node5);
@@ -84,13 +84,11 @@ void test_AddAvl_given_node10_node5_add_node1(void){
   initNode(&node10, &node5, NULL, -1);
 
   initNode(&node5, NULL, NULL, 0);
-  initNode(&node1, NULL, NULL, 0);
+  initNode(&node1, &node1, &node1, 0);
 
   Node *root = &node10;
   addAvl(&root, &node1);
-  //FIXME bf should be 0
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node10, 0);
-  //FIXME bf should be 0
   TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node1, NULL , NULL, 0);
 }

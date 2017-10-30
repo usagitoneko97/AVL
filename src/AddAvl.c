@@ -4,6 +4,8 @@
 int heightChanged;
 int addAvl(Node **rootPtr, Node *nodeToAdd){
   if(*(rootPtr) == NULL){
+    nodeToAdd->left = NULL;
+    nodeToAdd->right = NULL;
     *rootPtr = nodeToAdd;
     return CHANGED;
   }
@@ -32,7 +34,7 @@ int avlBalanceRightTree(Node **rootPtr){
 
   if((*rootPtr)->bf <= 1)
     return CHANGED;
-    
+
   //need to balance here
   if((*rootPtr)->right->bf < 0){
     //rotate right left
