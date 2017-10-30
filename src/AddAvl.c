@@ -6,6 +6,7 @@ int addAvl(Node **rootPtr, Node *nodeToAdd){
   if(*(rootPtr) == NULL){
     nodeToAdd->left = NULL;
     nodeToAdd->right = NULL;
+    nodeToAdd->bf = 0;
     *rootPtr = nodeToAdd;
     return CHANGED;
   }
@@ -17,6 +18,9 @@ int addAvl(Node **rootPtr, Node *nodeToAdd){
       // (*rootPtr)->bf ++;
       if(heightChanged == CHANGED)
         (*rootPtr)->bf ++;
+      else {
+        return NO_CHANGED;
+      }
       //  (*rootPtr)->bf = calcBF(*rootPtr);
       return avlBalanceRightTree(rootPtr);
     }

@@ -182,6 +182,41 @@ void test_addAvl_given_above_expect_rotateRL(void){
   TEST_ASSERT_EQUAL_NODE(&node20, NULL , NULL, 0);
 }
 
+/*
+ *
+ *         node3(1)                                node3(1)                           node3(1)
+ *        /    \                                   /    \                            /       \
+ *   node2(-1) node5(1)                        node2   node5                      node2    node5
+ *    /       /     \                           /      /   \                       /      /    \
+ * node1   node4   node10   (add node15 )  node1    node4  node10 (rotate RL)  node1  node4   node15
+ *                    \          --->                          \      --->                    /   \
+ *                    node20                                  node20                      node10  node20
+ *                                                            /
+ *                                                          node15
+ *
+ */
+void test_addAvl_given_above_expect_rotateRL__with_2_parents(void){
+  initNode(&node3, &node2, &node5, 1);
+  initNode(&node2, &node1, NULL, -1);
+  initNode(&node5, &node4, &node10, 1);
+  initNode(&node10, NULL, &node20, 1);
+  initNode(&node1, NULL, NULL, 0);
+  initNode(&node20, NULL, NULL, 0);
+  initNode(&node4, NULL, NULL, 0);
+
+  initNode(&node15, NULL, NULL, 0);
+
+  Node *root = &node3;
+  addAvl(&root, &node15);
+
+  TEST_ASSERT_EQUAL_NODE(&node3, &node2, &node5, 1);
+  TEST_ASSERT_EQUAL_NODE(&node5, &node4, &node15, 1);
+  TEST_ASSERT_EQUAL_NODE(&node15, &node10 , &node20, 0);
+
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL , NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node20, NULL , NULL, 0);
+}
 
 //--------------------------------------------------------------------------
 /**
