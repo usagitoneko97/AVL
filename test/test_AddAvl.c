@@ -1,7 +1,7 @@
 #include "unity.h"
 #include "AddAvl.h"
 #include "NodeHelper.h"
-#include "nodeVerifier.h"
+#include "NodeVerifier.h"
 #include "rotate.h"
 void setUp(void)
 {
@@ -35,6 +35,7 @@ void test_AddAvl_given_node1_add_node5(void){
   Node *root = &node1;
   addAvl(&root, &node5);
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, &node5, 1);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
 }
 
 /**
@@ -49,6 +50,7 @@ void test_AddAvl_given_node5_add_node1(void){
   Node *root = &node5;
   addAvl(&root, &node1);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, NULL, -1);
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
 }
 
 /**
@@ -65,8 +67,9 @@ void test_AddAvl_given_node1_node5_add_node10(void){
 
   Node *root = &node1;
   addAvl(&root, &node10);
-  TEST_ASSERT_EQUAL_NODE(&node5, &node1 , &node10, 1);
-  TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 2);
+  TEST_ASSERT_EQUAL_NODE(&node5, &node1 , &node10, 0);
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, 0);
 
 }
 
@@ -86,9 +89,9 @@ void test_AddAvl_given_node10_node5_add_node1(void){
   Node *root = &node10;
   addAvl(&root, &node1);
   //FIXME bf should be 0
-  TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node10, -1);
+  TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node10, 0);
   //FIXME bf should be 0
-  TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, -2);
+  TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node1, NULL , NULL, 0);
 }
 
@@ -108,8 +111,8 @@ void test_addAvl_given_node15_node5_add_node10(void){
   addAvl(&root, &node10);
 
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
-  TEST_ASSERT_EQUAL_NODE(&node5, NULL , NULL, 1);
-  TEST_ASSERT_EQUAL_NODE(&node15, NULL , NULL, -2);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL , NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node15, NULL , NULL, 0);
 }
 
 /**
@@ -130,8 +133,8 @@ void test_addAvl_given_node5_node15_add_node10_expect_rotateRL(void){
   addAvl(&root, &node10);
 
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
-  TEST_ASSERT_EQUAL_NODE(&node5, NULL , NULL, 2);
-  TEST_ASSERT_EQUAL_NODE(&node15, NULL , NULL, -1);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL , NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node15, NULL , NULL, 0);
 }
 
 /*
@@ -160,6 +163,6 @@ void test_addAvl_given_above_expect_rotateRL(void){
 
   //TODO change bf after rotate
   TEST_ASSERT_EQUAL_NODE(&node1, NULL , NULL, 0);
-  TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 2);
-  TEST_ASSERT_EQUAL_NODE(&node20, NULL , NULL, -1);
+  TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node20, NULL , NULL, 0);
 }
