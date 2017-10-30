@@ -2,6 +2,7 @@
 #include "rotate.h"
 #include "Node.h"
 #include "NodeHelper.h"
+#include "NodeVerifier.h"
 
 void setUp(void)
 {
@@ -12,40 +13,92 @@ void tearDown(void)
 {
 }
 
+
 /**
- *       30         10
- *      /          /  \
- *    10    ----> 5   30
- *   / \             /
- *  5  20          20
+ *    Scenario : Node = -2
+ *               child Node = -1
+ *    Expected : Node = 0
+ *               child Node = 0
+ *
+ *       30(-2)         10(0)
+ *      /              /  \
+ *    10(-1)  ---->   5   30(0)
+ *   /
+ *  5
  */
-void test_rotateRight(void)
+void test_rotateRight_m2_m1(void){
+  initNode(&node30, &node10, NULL, -2);
+  initNode(&node10, &node5, NULL, -1);
+  initNode(&node5, NULL, NULL, 0);
+
+  Node *root;
+  root = rotateRight(&node30);
+
+  TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, 0);
+  TEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
+}
+/**
+ * Scenario : Node = -2
+ *          : child Node = 0
+ * expected : Node = 1
+ *            child Node = -1
+ *
+ *       30(-2)         10(1)
+ *      /              /  \
+ *    10(0)   ---->   5   30
+ *   / \                  /
+ *  5  20               20
+ */
+void test_rotateRight_m2_m0(void)
 {
+    initNode(&node30, &node10, NULL, -2);
+    initNode(&node10, &node5, &node20, 0);
     initNode(&node5, NULL, NULL, 0);
     initNode(&node20, NULL, NULL, 0);
-    initNode(&node10, &node5, &node20, 0);
-    initNode(&node30, &node10, NULL, 0);
     Node *root;
     root = rotateRight(&node30);
-    TEST_ASSERT_EQUAL_PTR(&node10, root);
-    TEST_ASSERT_EQUAL_PTR(&node5, root->left);
-    TEST_ASSERT_EQUAL_PTR(&node30, root->right);
-    TEST_ASSERT_EQUAL_PTR(&node20, node30.left);
-    TEST_ASSERT_EQUAL_PTR(NULL, node20.right);
-    TEST_ASSERT_EQUAL_PTR(NULL, node20.left);
+    TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, 1);
+    TEST_ASSERT_EQUAL_NODE(&node30, &node20, NULL, -1);
+    TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
 
-    TEST_ASSERT_EQUAL_PTR(NULL, node5.right);
-    TEST_ASSERT_EQUAL_PTR(NULL, node5.left);
 }
 
 /**
- *       25                      35
+ * Scenario : Node = 2
+ *          : child Node = 1
+ * expected : Node = 0
+ *            child Node = 0
+ *     5                 10
+ *      \               /  \
+ *       10    --->    5   20
+ *        \
+ *         20
+ */
+void test_rotateLeft_p2_p1(void){
+  initNode(&node5, NULL, &node10, 2);
+  initNode(&node10, NULL,  &node20, 1);
+  initNode(&node20, NULL, NULL, 0);
+
+  rotateLeft(&node5);
+
+  TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node20, 0);
+  TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, 0);
+}
+
+/**
+ * Scenario : Node = -2
+ *          : child Node = 0
+ * expected : Node = 1
+ *            child Node = -1
+ *       25(2)                   35
  *        \                     /  \
- *        35             ----> 25   40
+ *        35(0)         ----> 25   40
  *       / \                    \
  *      30  40                   30
  */
-void test_rotateLeft(void){
+void test_rotateLeft_p2_p0(void){
   initNode(&node30, NULL, NULL, 0);
   initNode(&node40, NULL, NULL, 0);
   initNode(&node35, &node30, &node40, 0);
@@ -67,11 +120,15 @@ void test_rotateLeft(void){
 
 /**
  *
- *     30                      15
- *    /  \                    /  \
- *   10  50       ---->     10   30
- *  / \                    /    /  \
- * 5  15                  5    20   50
+ * Scenario : node = -2
+ *            child Node = 1
+ *            grandchild Node = 1
+ * Expected :
+ *     30(-2)                     15 (0)
+ *    /     \                    /  \
+ *   10(1)  50       ---->   10(-1) 30(0)
+ *  / \                       /    /  \
+ * 5  15(1)                 5    20   50
  *     \
  *     20
  */

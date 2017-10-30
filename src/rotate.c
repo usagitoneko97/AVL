@@ -17,9 +17,6 @@ Node *rotateLeft(Node *node){
     node->right = NULL;
   }
   root->left = node;
-
-  root->bf = calcBF(root);
-  node->bf = calcBF(node);
   return root;
 
 }
@@ -41,8 +38,6 @@ Node *rotateRight(Node *node){
     node->left = NULL;
   }
     root->right = node;
-  root->bf = calcBF(root);
-  node->bf = calcBF(node);
 
   return root;
 }

@@ -1,6 +1,6 @@
 #include "NodeHelper.h"
 
-extern Node node1, node5, node10, node15, node20, node25, node30, node35, node40;
+extern Node node1, node5, node10, node15, node20, node25, node30, node35, node40, node23;
 extern Node node45, node50, node55;
 
 
@@ -17,6 +17,7 @@ void initNodeData(void){
   node45.data = 45;
   node50.data = 50;
   node55.data = 55;
+  node23.data = 23;
 }
 
 void initNode(Node *node, Node *left, Node *right, int bf){
