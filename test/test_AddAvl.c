@@ -54,6 +54,23 @@ void test_AddAvl_given_node5_add_node1(void){
 }
 
 /**
+ *     10(-1)   (add 20)        10 (0)
+ *    /          ----->        /  \
+ *   5                        5    20
+ */
+void test_addAvl_given_10_5_add_20(void){
+  initNode(&node10, &node5, NULL,-1);
+  initNode(&node5, NULL, NULL, 0);
+  initNode(&node20, NULL, NULL, 0);
+
+  Node *root = &node10;
+  addAvl(&root, &node20);
+
+  TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node20, 0);
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
+}
+
+/**
  *    node1                  node1                     node5 (0)
  *        \         ----->     \            ---->      /    \
  *        node5                 node5               node1    node10
