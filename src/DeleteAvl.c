@@ -7,8 +7,9 @@ int avlDeleteLeaf(Node **rootPtr, int data){
         return NO_CHANGED;
     if((*rootPtr)->data == data){
         (*rootPtr) = NULL;
+        return CHANGED;
     }
-    else if ((*rootPtr)->data > data){
+    else if (data > (*rootPtr)->data){
         int heightChanged = avlDeleteLeaf(&(*(rootPtr))->right, data);
         if(heightChanged == CHANGED){
             (*rootPtr)->bf--;
