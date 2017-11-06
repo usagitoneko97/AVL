@@ -152,6 +152,34 @@ void test_addAvl_given_node5_node15_add_node10_expect_rotateRL(void){
   TEST_ASSERT_EQUAL_NODE(&node15, NULL , NULL, 0);
 }
 
+/** 
+*      node5                      5 
+*     /     \                   /  \ 
+*   node1   node15     --->    1   15
+*             \                    / \
+*             node20              10  20
+*                   
+ */
+void test_addAvl_parent_noHeightChanged_add_10(void){
+  initNode(&node5, &node1, &node15, 1);
+  initNode(&node15, NULL, &node20, 1);
+  initNode(&node1, NULL, NULL, 0);
+  initNode(&node20, NULL, NULL, 0);
+
+  initNode(&node10, NULL, NULL, 0);
+
+  Node *root = &node5;
+  addAvl(&root, &node10);
+
+  TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 1);
+  TEST_ASSERT_EQUAL_NODE(&node15, &node10, &node20, 0);
+
+  //TODO change bf after rotate
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, 0);
+}
+
 /*
  *
  *      node5                           node5                     node5
