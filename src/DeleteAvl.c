@@ -19,23 +19,35 @@ int avlDelete(Node **rootPtr, int data){
             //reattach the value to itself
             //perform avlDelete
             if((*rootPtr)->left == NULL){
-                temp = avlFindMin((*rootPtr)->right);
+                (*rootPtr)->bf --;
+                (*rootPtr)->right->bf = (*rootPtr)->bf ++;
+
+                (*rootPtr) = (*rootPtr)->right;
+                // temp = avlFindMin((*rootPtr)->right);
                 // int heightChanged = 
+            }
+            else if((*rootPtr)->right == NULL){
+                (*rootPtr)->bf++;
+                (*rootPtr)->left->bf = (*rootPtr)->bf;
+                (*rootPtr) = (*rootPtr)->left;
             }
             else{
                 temp = avlFindMax((*rootPtr)->left);
                 // int heightChanged = avlDelete(rootPtr, temp->data); //delete the data
-            }
-            avlDelete(rootPtr, temp->data); //delete the data
+                avlDelete(rootPtr, temp->data); //delete the data
 
-            temp->bf = (*rootPtr)->bf;
-            temp->left = (*rootPtr)->left;
-            temp->right = (*rootPtr)->right;
-            (*rootPtr) = temp;  //reattach the node that gets deleted
-            if((*rootPtr)->bf != 0){
-                return NO_CHANGED;
+                temp->bf = (*rootPtr)->bf;
+                temp->left = (*rootPtr)->left;
+                temp->right = (*rootPtr)->right;
+                (*rootPtr) = temp; //reattach the node that gets deleted
+                if ((*rootPtr)->bf != 0)
+                {
+                    return NO_CHANGED;
+                }
+                return CHANGED;
             }
             return CHANGED;
+            
         }
     }
     else if (data > (*rootPtr)->data){
