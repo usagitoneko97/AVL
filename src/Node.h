@@ -17,4 +17,7 @@ struct StrNode{
   char* data;
 };
 
+#define CHANGED 1
+#define NO_CHANGED 0
+
 #endif // _NODE_H

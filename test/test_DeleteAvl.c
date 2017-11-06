@@ -2,6 +2,7 @@
 #include "DeleteAvl.h"
 #include "NodeHelper.h"
 #include "NodeVerifier.h"
+#include "rotate.h"
 void setUp(void)
 {
     initNodeData();
