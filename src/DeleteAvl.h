@@ -2,6 +2,8 @@
 #define _DELETEAVL_H
 
 #include "Node.h"
-int avlDeleteLeaf(Node **rootPtr, int data);
+int avlDelete(Node **rootPtr, int data);
+Node *avlFindMin(Node *root);
+Node *avlFindMax(Node *root);
 
 #endif // _DELETEAVL_H
