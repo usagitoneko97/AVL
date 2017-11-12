@@ -11,6 +11,7 @@ void initNodeData(void){
   node3.data = 3;
   node4.data = 4;
   node5.data = 5;
+  node7.data = 7;
   node10.data = 10;
   node15.data = 15;
   node20.data = 20;

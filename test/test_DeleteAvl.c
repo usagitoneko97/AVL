@@ -270,19 +270,19 @@ void test_deleteNonLeaf_given_5_3_1_10_delete_15_expect_1_5_10(void)
 
 /** 
  *    
- *         5                               5 
- *       /  \                            /  \
- *      1   15     delete node 15       1   10 
- *         /  \          ---->               \
- *        10  20                             20
+ *         5                               5  
+ *       /  \                            /  \ 
+ *      1   15     delete node 15       1   10  
+ *         /  \          ---->               \ 
+ *        10  20                             20 
  */
 void test_deleteLeaf_given_deletedNode_left_right_Not_null_delete_15(void)
 {
     initNode(&node5, &node1, &node15, 1);
     initNode(&node15, &node10, &node20, 0);
     initNode(&node10, NULL, NULL, 0);
-    initNode(&node1, NULL, NULL, 0);
     initNode(&node20, NULL, NULL, 0);
+    initNode(&node1, NULL, NULL, 0);
 
     Node *root;
     root = &node5;
@@ -294,13 +294,45 @@ void test_deleteLeaf_given_deletedNode_left_right_Not_null_delete_15(void)
     TEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, 0);
 }
 
+/** 
+ *    
+ *         5                                 5 
+ *       /  \                              /  \
+ *      4    15      delete node 15       4   10 
+ *     /    /  \          ---->          /   / \
+ *    3   10  20                        3   7   20
+ *       /
+ *      7
+ */
+void test_deleteLeaf_given_deletedNode_left_right_Not_null_grandchild_notNULL_delete_15(void)
+{
+    initNode(&node5, &node4, &node15, 1);
+    initNode(&node4, &node3, NULL, -1);
+    initNode(&node15, &node10, &node20, -1);
+    initNode(&node10, &node7, NULL, -1);
+
+    initNode(&node3, NULL, NULL, 0);
+    initNode(&node7, NULL, NULL, 0);
+    initNode(&node20, NULL, NULL, 0);
+
+    Node *root;
+    root = &node5;
+
+    avlDelete(&root, 15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node4, &node10, 0);
+    TEST_ASSERT_EQUAL_NODE(&node10, &node7, &node20, 0);
+    TEST_ASSERT_EQUAL_NODE(&node3, NULL, NULL, 0);
+    TEST_ASSERT_EQUAL_NODE(&node7, NULL, NULL, 0);
+    TEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, 0);
+}
+
 /*
  *
- *         node3(1)                                       2  ()
- *        /    \                                        /  \
- *   node2(-1) node5(1)        remove node3            1   5              
- *    /       /     \             ----->                  / \       --->     
- * node1   node4   node10                                4   10
+ *         node3(1)                                       2  (2)                            5(0)
+ *        /    \                                        /  \                              /   \
+ *   node2(-1) node5(1)        remove node3            1   5 (1)    (rotate left)       2(0)  10(1)
+ *    /       /     \             ----->                  / \            --->          / \     \
+ * node1   node4   node10                                4   10                       1   4    20
  *                    \                                       \
  *                    node20                                  20 
  *                                                            
@@ -322,11 +354,11 @@ void xtest_avlDelete_3_expect_rotateAtParent(void)
     Node *root = &node3;
     avlDelete(&root, 3);
 
-    TEST_ASSERT_EQUAL_NODE(&node3, &node2, &node5, 1);
-    TEST_ASSERT_EQUAL_NODE(&node5, &node4, &node15, 1);
-    TEST_ASSERT_EQUAL_NODE(&node15, &node10, &node20, 0);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node2, &node10, 0);
+    TEST_ASSERT_EQUAL_NODE(&node2, &node1, &node4, 0);
+    TEST_ASSERT_EQUAL_NODE(&node10, NULL, &node20, 1);
 
     TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
-    TEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, 0);
+    TEST_ASSERT_EQUAL_NODE(&node4, NULL, NULL, 0);
     TEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, 0);
 }

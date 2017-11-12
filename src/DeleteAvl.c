@@ -46,9 +46,10 @@ Node *_avlDelete(Node **rootPtr, int data, int *heightChangedStatus, int deleteF
                     (*rootPtr)->bf ++;
                 }
                 temp->bf = (*rootPtr)->bf;
-                temp->left = (*rootPtr)->left;
                 temp->right = (*rootPtr)->right;
-                (*rootPtr) = temp; //reattach the node that gets deleted
+                //reattach the node that gets deleted
+                (*rootPtr) = temp; 
+                //condition where deletion wont cause reduce in height
                 if ((*rootPtr)->bf != 0)
                 {
                     *heightChangedStatus = NO_CHANGED;
@@ -61,13 +62,15 @@ Node *_avlDelete(Node **rootPtr, int data, int *heightChangedStatus, int deleteF
         }
     }
     else if (data > (*rootPtr)->data){
-        if((*rootPtr)->left == NULL && (*rootPtr)->left == NULL){
+        if((*rootPtr)->right == NULL){
+            //perform deletion when its not the leaf
+            //reattach the rootPtr now to previous caller to attach to the parent
             if(deleteFlag == 1){
                 //return Node to be replace at top
                 *heightChangedStatus = CHANGED;
                 temp = (*rootPtr);
-                (*rootPtr) = NULL;
-                return temp;
+//                (*rootPtr) = NULL;
+                return (*rootPtr);
             }
         }
         temp = _avlDelete(&(*(rootPtr))->right, data, heightChangedStatus, 0);
