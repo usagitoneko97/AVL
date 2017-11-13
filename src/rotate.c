@@ -139,7 +139,7 @@ int avlBalanceRightTree(Node **rootPtr)
     case 0:
       (*rootPtr)->bf = -1;
       (*rootPtr)->left->bf = 1;
-      return CHANGED;
+      return NO_CHANGED;
       break;
     }
   }
