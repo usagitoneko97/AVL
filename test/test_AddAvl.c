@@ -84,7 +84,8 @@ void test_AddAvl_given_node1_node5_add_node10(void){
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node1;
-  addAvl(&root, &node10);
+  int heightChanged = addAvl(&root, &node10);
+  TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1 , &node10, 0);
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, 0);
@@ -105,7 +106,8 @@ void test_AddAvl_given_node10_node5_add_node1(void){
   initNode(&node1, &node1, &node1, 0);
 
   Node *root = &node10;
-  addAvl(&root, &node1);
+  int heightChanged = addAvl(&root, &node1);
+  TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node10, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node1, NULL , NULL, 0);
@@ -124,8 +126,8 @@ void test_addAvl_given_node15_node5_add_node10(void){
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node15;
-  addAvl(&root, &node10);
-
+  int heightChanged = addAvl(&root, &node10);
+  TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL , NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node15, NULL , NULL, 0);
@@ -146,8 +148,9 @@ void test_addAvl_given_node5_node15_add_node10_expect_rotateRL(void){
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node5;
-  addAvl(&root, &node10);
+  int heightChanged = addAvl(&root, &node10);
 
+  TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL , NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node15, NULL , NULL, 0);
@@ -170,8 +173,8 @@ void test_addAvl_parent_noHeightChanged_add_10(void){
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node5;
-  addAvl(&root, &node10);
-
+  int heightChanged = addAvl(&root, &node10);
+  TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 1);
   TEST_ASSERT_EQUAL_NODE(&node15, &node10, &node20, 0);
 
@@ -200,8 +203,8 @@ void test_addAvl_given_above_expect_rotateRL(void){
   initNode(&node15, NULL, NULL, 0);
 
   Node *root = &node5;
-  addAvl(&root, &node15);
-
+  int heightChanged = addAvl(&root, &node15);
+  TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 1);
   TEST_ASSERT_EQUAL_NODE(&node15, &node10 , &node20, 0);
 
@@ -236,8 +239,8 @@ void test_addAvl_given_above_expect_rotateRL__with_2_parents(void){
   initNode(&node15, NULL, NULL, 0);
 
   Node *root = &node3;
-  addAvl(&root, &node15);
-
+  int heightChanged = addAvl(&root, &node15);
+  TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node3, &node2, &node5, 1);
   TEST_ASSERT_EQUAL_NODE(&node5, &node4, &node15, 1);
   TEST_ASSERT_EQUAL_NODE(&node15, &node10 , &node20, 0);

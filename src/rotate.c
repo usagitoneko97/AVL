@@ -95,6 +95,23 @@ int nodeHeight(Node *root){
   }
 }
 
+/** ------------------------------------------------------------------
+ *           before         |        |        after         |
+ *                    grand |        |                grand | height
+ *     root   child   child | action | root   child   child | change
+ *  ------------------------------------------------------------------
+ *      +2     +1       x   |   L    |  0       0       x   |  TRUE
+ *      +2      0       x   |   L    |  1      -1       x   |  
+ *      +2     -1      -1   |   RL   |  0       1       0   |  TRUE
+ *      +2     -1       0   |   RL   |  0       0       0   |
+ *      +2     -1      +1   |   RL   | -1       0       0   |
+ *      -2     -1       x   |   R    |  0       0       x   |
+ *      -2      0       x   |   R    | -1       1       x   |
+ *      -2     +1      +1   |   LR   |  0      -1       0   |
+ *      -2     +1       0   |   LR   |  0       0       0   |
+ *      -2     +1      -1   |   LR   |  1       0       0   |
+ *  -----------------------------------------------------------------
+ */
 int avlBalanceRightTree(Node **rootPtr)
 {
 
@@ -112,16 +129,19 @@ int avlBalanceRightTree(Node **rootPtr)
       (*rootPtr)->bf = 0;
       (*rootPtr)->left->bf = 0;
       (*rootPtr)->right->bf = 1;
+      return CHANGED;
       break;
     case 0:
       (*rootPtr)->bf = 0;
       (*rootPtr)->left->bf = 0;
       (*rootPtr)->right->bf = 0;
+      return CHANGED;
       break;
     case 1:
       (*rootPtr)->bf = 0;
       (*rootPtr)->left->bf = -1;
       (*rootPtr)->right->bf = 0;
+      return CHANGED;
       break;
     }
   }
