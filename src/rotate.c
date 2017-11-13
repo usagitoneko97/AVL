@@ -159,16 +159,19 @@ int avlBalanceLeftTree(Node **rootPtr)
       (*rootPtr)->bf = 0;
       (*rootPtr)->left->bf = -1;
       (*rootPtr)->right->bf = 0;
+      return CHANGED;
       break;
     case 0:
       (*rootPtr)->bf = 0;
       (*rootPtr)->left->bf = 0;
       (*rootPtr)->right->bf = 0;
+      return CHANGED;
       break;
     case -1:
       (*rootPtr)->bf = 0;
       (*rootPtr)->left->bf = 0;
       (*rootPtr)->right->bf = 1;
+      return CHANGED;
       break;
     }
   }
@@ -186,7 +189,7 @@ int avlBalanceLeftTree(Node **rootPtr)
     case 0:
       (*rootPtr)->bf = 1;
       (*rootPtr)->right->bf = -1;
-      return CHANGED;
+      return NO_CHANGED;
       break;
     }
   }

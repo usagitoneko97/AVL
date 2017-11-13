@@ -315,7 +315,7 @@ void test_avBalanceRightTree_given_5_10_20(void)
 }
 
 /**
- * Scenario : Node = -2
+ * Scenario : Node = 2
  *          : child Node = 0
  * expected : Node = 1
  *            child Node = -1
