@@ -3,7 +3,7 @@
 
 #include "Node.h"
 Node *avlDelete(Node **rootPtr, int data);
-Node *_avlDelete(Node **rootPtr, int data, int *heightChangedStatus, int deleteFlag);
+Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int deleteFlag);
 Node *avlFindMin(Node *root);
 Node *avlFindMax(Node *root);
 

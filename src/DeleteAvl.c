@@ -5,15 +5,15 @@
 
 Node *avlDelete(Node **rootPtr, int data){
     int heightChangedTemp;
-    _avlDelete(rootPtr, data, &heightChangedTemp, 0);
+    _avlDelete(rootPtr, &data, &heightChangedTemp, 0);
 }
 
-Node *_avlDelete(Node **rootPtr, int data, int *heightChangedStatus, int deleteFlag){
+Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int deleteFlag){
     int min;
     Node *temp;
     if((*rootPtr) == NULL)
         return NULL;
-    if((*rootPtr)->data == data){
+    if(compare(data, (*rootPtr)) == 0){
         if ((*rootPtr)->left == NULL && (*rootPtr)->right == NULL){
             *heightChangedStatus = CHANGED;
             (*rootPtr) = NULL;
@@ -61,7 +61,7 @@ Node *_avlDelete(Node **rootPtr, int data, int *heightChangedStatus, int deleteF
 
                 //reattach the node that gets deleted
                 (*rootPtr) = temp; 
-                
+
                 //balance right tree if needed
                 *heightChangedStatus = avlBalanceRightTree(rootPtr);
 
@@ -76,7 +76,7 @@ Node *_avlDelete(Node **rootPtr, int data, int *heightChangedStatus, int deleteF
         }
 		return NULL;
     }
-    else if (data > (*rootPtr)->data){
+    else if (compare(data, (*rootPtr)) == 1){
         if((*rootPtr)->right == NULL){
             //perform deletion when its not the leaf
             //reattach the rootPtr now to previous caller to attach to the parent

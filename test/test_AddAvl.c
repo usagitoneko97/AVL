@@ -3,6 +3,7 @@
 #include "NodeHelper.h"
 #include "NodeVerifier.h"
 #include "rotate.h"
+#include "Node.h"
 void setUp(void)
 {
   initNodeData();

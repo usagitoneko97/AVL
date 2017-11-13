@@ -20,4 +20,5 @@ struct StrNode{
 #define CHANGED 1
 #define NO_CHANGED 0
 
+int compare(void *data, Node *node);
 #endif // _NODE_H
