@@ -5,43 +5,89 @@
 
 Node *avlDelete(Node **rootPtr, int data){
     int heightChangedTemp;
-    _avlDelete(rootPtr, &data, &heightChangedTemp, 0);
+    Node *deletedNode = _avlDelete(rootPtr, &data, &heightChangedTemp);
+    if(deletedNode == NULL){
+        printf("deleted value doesn't exist!");
+    }
+    return deletedNode;
 }
 
-Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int deleteFlag){
+Node *tempNode;
+Node *avlDeleteNearestLeft(Node **rootPtr, int *heightChangedStatus){
+    if((*rootPtr) == NULL){
+        return NULL;
+    }
+    if((*rootPtr)->right != NULL){
+        tempNode = avlDeleteNearestLeft(&(*rootPtr)->right, heightChangedStatus);
+        if(*heightChangedStatus == CHANGED){
+            (*rootPtr)->bf--;
+            *heightChangedStatus = avlBalanceLeftTree(rootPtr);
+        }
+        else{
+            return NO_CHANGED;
+        }
+        if (tempNode != NULL && tempNode->left != NULL)
+        {
+            //pass grandchild to child before replacing at the parent
+            (*rootPtr)->right = tempNode->left;
+            tempNode->left = NULL;
+        }
+        return tempNode;
+    }   
+    //recursive untill right is null, delete itself
+    else{
+        tempNode = (*rootPtr);
+        (*rootPtr) = NULL;
+        *heightChangedStatus = CHANGED;
+        return tempNode;
+    }
+   
+}
+
+Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus){
     int min;
-    Node *temp;
+    Node *temp, *temp1;
     if((*rootPtr) == NULL)
         return NULL;
     if(compare(data, (*rootPtr)) == 0){
         if ((*rootPtr)->left == NULL && (*rootPtr)->right == NULL){
             *heightChangedStatus = CHANGED;
+            temp = (*rootPtr);
             (*rootPtr) = NULL;
-            return NULL;
+            return temp;
         }
         else{
             //has child
             //if left == NULL, directly move rootptr right up to replace
             if((*rootPtr)->left == NULL){
+                //returning node to be deleted
+                temp = (*rootPtr);
                 (*rootPtr)->bf --;
                 (*rootPtr)->right->bf = (*rootPtr)->bf ++;
                 (*rootPtr) = (*rootPtr)->right;
-				*heightChangedStatus =  CHANGED;
+                *heightChangedStatus =  CHANGED;
+                return temp;
                 // temp = avlFindMin((*rootPtr)->right);
                 // int heightChanged = 
             }
             //if right == NULL, directly move rootptr left up to replace
             else if((*rootPtr)->right == NULL){
+                //removing (*rootPtr);
+                //returning node to be deleted
+                temp = (*rootPtr);
                 (*rootPtr)->bf++;
                 (*rootPtr)->left->bf = (*rootPtr)->bf;
                 (*rootPtr) = (*rootPtr)->left;
-				*heightChangedStatus =  CHANGED;
+                *heightChangedStatus =  CHANGED;
+                return temp;
             }
             //when node that to be deleted has both child right and left
             else{
                 //attempt to delete the nearest value to "data" by setting deleteFlag to 1
-                temp = _avlDelete(&(*(rootPtr))->left, data, heightChangedStatus, 1); //delete the data0
+                // temp = _avlDelete(&(*(rootPtr))->left, data, heightChangedStatus, 1); //delete the data0
+                temp = avlDeleteNearestLeft(&(*rootPtr)->left, heightChangedStatus);
 
+				//temp1 = temp;
                 //case where nearest node that found is at left of rootptr, then the node 
                 //that found should retain its left child instead of overwrite by rootptr right child
                 if((*rootPtr)->left != NULL){
@@ -69,31 +115,15 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int delet
                 if ((*rootPtr)->bf != 0)
                 {
                     *heightChangedStatus = NO_CHANGED;
-                    return NULL;
                 }
             }
-            return NULL;
+            return temp;
         }
 		return NULL;
     }
     else if (compare(data, (*rootPtr)) == 1){
-        if((*rootPtr)->right == NULL){
-            //perform deletion when its not the leaf
-            //reattach the rootPtr now to previous caller to attach to the parent
-            if(deleteFlag == 1){
-                //return Node to be replace at top
-                *heightChangedStatus = CHANGED;
-                temp = (*rootPtr);
-                (*rootPtr) = NULL;
-                return temp;
-            }
-        }
-        temp = _avlDelete(&(*(rootPtr))->right, data, heightChangedStatus, deleteFlag);
-        if(temp != NULL && temp->left != NULL){
-            //pass grandchild to child before replacing at the parent
-            (*rootPtr)->right = temp->left;
-            temp->left = NULL;
-        }
+        temp = _avlDelete(&(*(rootPtr))->right, data, heightChangedStatus);
+    
         if (*heightChangedStatus == CHANGED)
         {
             (*rootPtr)->bf--;
@@ -106,7 +136,7 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int delet
         return temp;
     }
     else{
-        temp = _avlDelete(&(*(rootPtr))->left, data, heightChangedStatus, 0);
+        temp = _avlDelete(&(*(rootPtr))->left, data, heightChangedStatus);
         if (*heightChangedStatus == CHANGED)
         {
             (*rootPtr)->bf++;

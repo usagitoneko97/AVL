@@ -68,7 +68,8 @@ void test_deleteLeaf_given_NULL(void){
     Node *root;
     root = NULL;
 
-    avlDelete(&root, 0);
+    Node *deletedNode = avlDelete(&root, 0);
+    TEST_ASSERT_NULL(deletedNode);
     TEST_ASSERT_NULL(root);
 }   
 /** 
@@ -262,7 +263,8 @@ void test_deleteNonLeaf_given_5_3_1_10_delete_15_expect_1_5_10(void)
     Node *root;
     root = &node5;
 
-    avlDelete(&root, 15);
+    Node *deletedNode = avlDelete(&root, 15);
+    TEST_ASSERT_NOT_NULL(deletedNode);
     TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node10, 0);
     TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
     TEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, 0);
@@ -288,7 +290,8 @@ void test_deleteLeaf_given_deletedNode_left_right_Not_null_delete_15(void)
     Node *root;
     root = &node5;
 
-    avlDelete(&root, 15);
+    Node *deletedNode = avlDelete(&root, 15);
+    TEST_ASSERT_NOT_NULL(deletedNode);
     TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node10, 1);
     TEST_ASSERT_EQUAL_NODE(&node10, NULL, &node20, 1);
     TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
