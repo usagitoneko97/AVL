@@ -22,6 +22,8 @@ void initNodeData(void){
   node45.data = 45;
   node50.data = 50;
   node55.data = 55;
+  node60.data = 60;
+  node70.data = 70;
   node23.data = 23;
 }
 

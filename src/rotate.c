@@ -101,7 +101,7 @@ int avlBalanceRightTree(Node **rootPtr)
   if ((*rootPtr)->bf <= 1)
     return CHANGED;
 
-  //need to balance here
+  //need to balance here as balance factor = 2
   if ((*rootPtr)->right->bf < 0)
   {
     //rotate right left
@@ -134,6 +134,7 @@ int avlBalanceRightTree(Node **rootPtr)
     case 1:
       (*rootPtr)->bf = 0;
       (*rootPtr)->left->bf = 0;
+      return CHANGED;
       break;
     case 0:
       (*rootPtr)->bf = -1;
@@ -142,7 +143,6 @@ int avlBalanceRightTree(Node **rootPtr)
       break;
     }
   }
-  return NO_CHANGED;
 }
 
 int avlBalanceLeftTree(Node **rootPtr)
@@ -181,6 +181,7 @@ int avlBalanceLeftTree(Node **rootPtr)
     case -1:
       (*rootPtr)->bf = 0;
       (*rootPtr)->right->bf = 0;
+	  return CHANGED;
       break;
     case 0:
       (*rootPtr)->bf = 1;
@@ -189,5 +190,4 @@ int avlBalanceLeftTree(Node **rootPtr)
       break;
     }
   }
-  return NO_CHANGED;
 }
