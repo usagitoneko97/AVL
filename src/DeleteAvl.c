@@ -2,7 +2,14 @@
 #include <stdio.h>
 #include "rotate.h"
 
-
+/** 
+ * @brief  perform deletion by given the data
+ * @note   wrapper around _avldelete and is intended to use public (public)
+ * @param  **rootPtr: pointer to the avl tree
+ * @param  data:      data to be deleted
+ * @retval non null: the deleted value
+ *         null    : data to be deleted doesn't exost in the avl tree
+ */
 Node *avlDelete(Node **rootPtr, int data){
     int heightChangedTemp;
     Node *deletedNode = _avlDelete(rootPtr, &data, &heightChangedTemp);
@@ -13,9 +20,18 @@ Node *avlDelete(Node **rootPtr, int data){
 }
 
 Node *tempNode;
+
+/** 
+ * @brief  delete nearest value (left side) of root
+ * @note   heightChangedStatus is only internally use (to balance the tree)
+ * @param  **rootPtr:               root ptr of avl struct
+ * @param  *heightChangedStatus:    height change (true or false) of the avl
+ * @retval deleted node
+ */
 Node *avlDeleteNearestLeft(Node **rootPtr, int *heightChangedStatus){
     if((*rootPtr) == NULL){
-        return NULL;
+        *heightChangedStatus = CHANGED;
+         return NULL;
     }
     if((*rootPtr)->right != NULL){
         tempNode = avlDeleteNearestLeft(&(*rootPtr)->right, heightChangedStatus);
@@ -41,9 +57,17 @@ Node *avlDeleteNearestLeft(Node **rootPtr, int *heightChangedStatus){
         *heightChangedStatus = CHANGED;
         return tempNode;
     }
-   
 }
 
+/** 
+ * @brief  perform deletion 
+ * @note   private function 
+ * @param  **rootPtr: root ptr of the avl tree
+ * @param  *data:                    pointer to the data to be deleted
+ * @param  *heightChangedStatus:     status changed of the height of the avl (only internally use)
+ * @retval non null: the deleted value
+ *         null    : data to be deleted doesn't exost in the avl tree
+ */
 Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus){
     int min;
     Node *temp, *temp1;
@@ -83,8 +107,7 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus){
             }
             //when node that to be deleted has both child right and left
             else{
-                //attempt to delete the nearest value to "data" by setting deleteFlag to 1
-                // temp = _avlDelete(&(*(rootPtr))->left, data, heightChangedStatus, 1); //delete the data0
+                //NOTE :heightChangedStatus that pass in here can be any value
                 temp = avlDeleteNearestLeft(&(*rootPtr)->left, heightChangedStatus);
 
 				//temp1 = temp;
@@ -150,6 +173,7 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus){
     }
 	return NULL;
 }
+
 
 Node *avlFindMin(Node *root){
     if(root->left == NULL)

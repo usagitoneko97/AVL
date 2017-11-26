@@ -2,6 +2,13 @@
 #include "rotate.h"
 
 int heightChanged;
+
+/** 
+ * @brief  add a value to the avl tree
+ * @param  **rootPtr: pointer to the avl tree
+ * @param  *nodeToAdd: node structure to add
+ * @retval height change status of the avl tree after addition
+ */
 int addAvl(Node **rootPtr, Node *nodeToAdd){
   if(*(rootPtr) == NULL){
     nodeToAdd->left = NULL;

@@ -494,7 +494,7 @@ void test_avlDelete_replace_and_child_rotate_RL(void)
  *       50                                               40
  *      /  \              delete 50                      / \
  *     30  60    child rotate right before return      20  60
- *    /  \  \            --->                         / \   \
+ *    /  \  \                --->                     / \   \
  *   20  40  70                                     15   30  70
  *  / \                                                 /
  * 15  25                                              25  

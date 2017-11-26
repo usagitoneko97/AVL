@@ -7,6 +7,11 @@
  *       / \                    \
  *      30  40                   30
  */
+/** 
+ * @brief  rotate left of the avl tree
+ * @param  *node: avl tree
+ * @retval return the new root after rotation
+ */
 Node *rotateLeft(Node *node){
   Node *root;
   root = node->right;
@@ -27,6 +32,11 @@ Node *rotateLeft(Node *node){
  *    10    ----> 5   30
  *   / \             /
  *  5  20          20
+ */
+/** 
+ * @brief  rotate right of the avl tree
+ * @param  *node: avl tree
+ * @retval return the new root after rotation
  */
 Node *rotateRight(Node *node){
   Node *root;
@@ -101,17 +111,23 @@ int nodeHeight(Node *root){
  *     root   child   child | action | root   child   child | change
  *  ------------------------------------------------------------------
  *      +2     +1       x   |   L    |  0       0       x   |  TRUE
- *      +2      0       x   |   L    |  1      -1       x   |  
+ *      +2      0       x   |   L    |  1      -1       x   |  F
  *      +2     -1      -1   |   RL   |  0       1       0   |  TRUE
- *      +2     -1       0   |   RL   |  0       0       0   |
- *      +2     -1      +1   |   RL   | -1       0       0   |
- *      -2     -1       x   |   R    |  0       0       x   |
- *      -2      0       x   |   R    | -1       1       x   |
- *      -2     +1      +1   |   LR   |  0      -1       0   |
- *      -2     +1       0   |   LR   |  0       0       0   |
- *      -2     +1      -1   |   LR   |  1       0       0   |
+ *      +2     -1       0   |   RL   |  0       0       0   |  F
+ *      +2     -1      +1   |   RL   | -1       0       0   |  F
+ *      -2     -1       x   |   R    |  0       0       x   |  F
+ *      -2      0       x   |   R    | -1       1       x   |  F
+ *      -2     +1      +1   |   LR   |  0      -1       0   |  F
+ *      -2     +1       0   |   LR   |  0       0       0   |  F
+ *      -2     +1      -1   |   LR   |  1       0       0   |  F
  *  -----------------------------------------------------------------
  */
+
+ /** 
+  * @brief  balance right side of the tree pointed by rootptr
+  * @param  **rootPtr: pointer to the avl tree
+  * @retval height change status after avl rotation(if any)
+  */
 int avlBalanceRightTree(Node **rootPtr)
 {
 
@@ -165,6 +181,11 @@ int avlBalanceRightTree(Node **rootPtr)
   }
 }
 
+/** 
+  * @brief  balance left side of the tree pointed by rootptr
+  * @param  **rootPtr: pointer to the avl tree
+  * @retval height change status after avl rotation(if any)
+  */
 int avlBalanceLeftTree(Node **rootPtr)
 {
   if ((*rootPtr)->bf >= -1)
