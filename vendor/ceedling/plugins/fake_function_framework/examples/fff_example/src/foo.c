@@ -1,6 +1,6 @@
 #include "foo.h"
 #include "bar.h"
-#include "subfolder/zzz.h"
+#include "subalanceFactorolder/zzz.h"
 
 void foo_turn_on(void) {
   bar_turn_on();

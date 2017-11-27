@@ -4,15 +4,15 @@
 
 /** 
  * @brief  perform deletion by given the data
- * @note   wrapper around _avldelete and is intended to use public (public)
+ * @note   wrapper around _avlRemove and is intended to use public (public)
  * @param  **rootPtr: pointer to the avl tree
  * @param  data:      data to be deleted
  * @retval non null: the deleted value
  *         null    : data to be deleted doesn't exost in the avl tree
  */
-Node *avlDelete(Node **rootPtr, int data, int (*compare)(void *data, Node *node)){
+Node *avlRemove(Node **rootPtr, int data, int (*compare)(void *data, Node *node)){
     int heightChangedTemp;
-    Node *deletedNode = _avlDelete(rootPtr, &data, &heightChangedTemp, compare);
+    Node *deletedNode = _avlRemove(rootPtr, &data, &heightChangedTemp, compare);
     if(deletedNode == NULL){
         printf("deleted value doesn't exist!");
     }
@@ -28,15 +28,15 @@ Node *tempNode;
  * @param  *heightChangedStatus:    height change (true or false) of the avl
  * @retval deleted node
  */
-Node *avlDeleteNearestLeft(Node **rootPtr, int *heightChangedStatus){
+Node *avlRemoveNearestLeft(Node **rootPtr, int *heightChangedStatus){
     if((*rootPtr) == NULL){
         *heightChangedStatus = CHANGED;
          return NULL;
     }
     if((*rootPtr)->right != NULL){
-        tempNode = avlDeleteNearestLeft(&(*rootPtr)->right, heightChangedStatus);
+        tempNode = avlRemoveNearestLeft(&(*rootPtr)->right, heightChangedStatus);
         if(*heightChangedStatus == CHANGED){
-            (*rootPtr)->bf--;
+            (*rootPtr)->balanceFactor--;
             *heightChangedStatus = avlBalanceLeftTree(rootPtr);
         }
         else{
@@ -68,7 +68,7 @@ Node *avlDeleteNearestLeft(Node **rootPtr, int *heightChangedStatus){
  * @retval non null: the deleted value
  *         null    : data to be deleted doesn't exost in the avl tree
  */
-Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int (*compare)(void *, Node *))
+Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, int (*compare)(void *, Node *))
 {
     int min;
     Node *temp, *temp1;
@@ -87,8 +87,8 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int (*com
             if((*rootPtr)->left == NULL){
                 //returning node to be deleted
                 temp = (*rootPtr);
-                (*rootPtr)->bf --;
-                (*rootPtr)->right->bf = (*rootPtr)->bf ++;
+                (*rootPtr)->balanceFactor --;
+                (*rootPtr)->right->balanceFactor = (*rootPtr)->balanceFactor ++;
                 (*rootPtr) = (*rootPtr)->right;
                 *heightChangedStatus =  CHANGED;
                 return temp;
@@ -100,34 +100,35 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int (*com
                 //removing (*rootPtr);
                 //returning node to be deleted
                 temp = (*rootPtr);
-                (*rootPtr)->bf++;
-                (*rootPtr)->left->bf = (*rootPtr)->bf;
+                (*rootPtr)->balanceFactor++;
+                (*rootPtr)->left->balanceFactor = (*rootPtr)->balanceFactor;
                 (*rootPtr) = (*rootPtr)->left;
                 *heightChangedStatus =  CHANGED;
                 return temp;
             }
             //when node that to be deleted has both child right and left
             else{
-                //NOTE :heightChangedStatus that pass in here can be any value
-                temp = avlDeleteNearestLeft(&(*rootPtr)->left, heightChangedStatus);
+                temp = avlRemoveNearestLeft(&(*rootPtr)->left, heightChangedStatus);
 
-				//temp1 = temp;
-                //case where nearest node that found is at left of rootptr, then the node 
+                //temp1 = temp;
+                //case where nearest node that found is at left of rootptr, then the node
                 //that found should retain its left child instead of overwrite by rootptr right child
+               
                 if((*rootPtr)->left != NULL){
                     temp->left = (*rootPtr)->left;
                     temp->right = (*rootPtr)->right;
                 }
                 else{
+                    //see @test_avlRemove_3_expect_rotateAtParent
                     temp->right = (*rootPtr)->right;
                 }
 
                 //modify balance factor by heightChangedStatus
                 if(*heightChangedStatus == CHANGED){
-                    (*rootPtr)->bf ++;
+                    (*rootPtr)->balanceFactor ++;
                 }
-                //replace bf of node that found to the original bf
-                temp->bf = (*rootPtr)->bf;
+                //replace balanceFactor of node that found to the original balanceFactor
+                temp->balanceFactor = (*rootPtr)->balanceFactor;
 
                 //reattach the node that gets deleted
                 (*rootPtr) = temp; 
@@ -136,7 +137,7 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int (*com
                 *heightChangedStatus = avlBalanceRightTree(rootPtr);
 
                 //condition where deletion wont cause reduce in height
-                if ((*rootPtr)->bf != 0)
+                if ((*rootPtr)->balanceFactor != 0)
                 {
                     *heightChangedStatus = NO_CHANGED;
                 }
@@ -146,11 +147,11 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int (*com
 		return NULL;
     }
     else if (compare(data, (*rootPtr)) == 1){
-        temp = _avlDelete(&(*(rootPtr))->right, data, heightChangedStatus, compare);
+        temp = _avlRemove(&(*(rootPtr))->right, data, heightChangedStatus, compare);
     
         if (*heightChangedStatus == CHANGED)
         {
-            (*rootPtr)->bf--;
+            (*rootPtr)->balanceFactor--;
             *heightChangedStatus = avlBalanceLeftTree(rootPtr);
             
         }
@@ -160,10 +161,10 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int (*com
         return temp;
     }
     else{
-        temp = _avlDelete(&(*(rootPtr))->left, data, heightChangedStatus, compare);
+        temp = _avlRemove(&(*(rootPtr))->left, data, heightChangedStatus, compare);
         if (*heightChangedStatus == CHANGED)
         {
-            (*rootPtr)->bf++;
+            (*rootPtr)->balanceFactor++;
             *heightChangedStatus = avlBalanceRightTree(rootPtr);
         }
         else

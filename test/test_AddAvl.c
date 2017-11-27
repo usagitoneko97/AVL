@@ -21,11 +21,11 @@ void tearDown(void)
 /**
  *    NULL -->  node1
  */
-void test_AddAvl_given_NULL_add_1Node(void)
+void test_avlAdd_given_NULL_add_1Node(void)
 {
   Node *root = NULL;
   Try{
-    addAvl(&root, &node5);
+    _avlAdd(&root, &node5);
   }Catch(ex){
     dumpException(ex);
   }  
@@ -38,13 +38,13 @@ void test_AddAvl_given_NULL_add_1Node(void)
  *                      \
  *                      node5
  */
-void test_AddAvl_given_node1_add_node5(void){
+void test_avlAdd_given_node1_add_node5(void){
   initNode(&node1, NULL, NULL, 0);
   initNode(&node5, &node5, &node5, 0);
 
   Node *root = &node1;
   Try{
-    addAvl(&root, &node5);
+    _avlAdd(&root, &node5);
   }Catch(ex){
     dumpException(ex);
   }
@@ -57,13 +57,13 @@ void test_AddAvl_given_node1_add_node5(void){
  *                  /
  *                node1
  */
-void test_AddAvl_given_node5_add_node1(void){
+void test_avlAdd_given_node5_add_node1(void){
   initNode(&node1, NULL, NULL, 0);
   initNode(&node5, NULL, NULL, 0);
 
   Node *root = &node5;
   Try{
-    addAvl(&root, &node1);
+    _avlAdd(&root, &node1);
   }Catch(ex){
     dumpException(ex);
   }
@@ -76,14 +76,14 @@ void test_AddAvl_given_node5_add_node1(void){
  *    /          ----->        /  \
  *   5                        5    20
  */
-void test_addAvl_given_10_5_add_20(void){
+void test_avlAdd_given_10_5_add_20(void){
   initNode(&node10, &node5, NULL,-1);
   initNode(&node5, NULL, NULL, 0);
   initNode(&node20, NULL, NULL, 0);
 
   Node *root = &node10;
   Try{
-    addAvl(&root, &node20);
+    _avlAdd(&root, &node20);
   }Catch(ex){
     dumpException(ex);
   }
@@ -99,14 +99,14 @@ void test_addAvl_given_10_5_add_20(void){
  *                               \
  *                               node10
  */
-void test_AddAvl_given_node1_node5_add_node10(void){
+void test_avlAdd_given_node1_node5_add_node10(void){
   initNode(&node1, NULL, &node5, 1);
   initNode(&node5, NULL, NULL, 0);
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node1;
   Try{
-    heightChanged = addAvl(&root, &node10);
+    heightChanged = _avlAdd(&root, &node10);
   }Catch(ex){
     dumpException(ex);
   }
@@ -124,7 +124,7 @@ void test_AddAvl_given_node1_node5_add_node10(void){
  *                         /
  *                        node1  (0)
  */
-void test_AddAvl_given_node10_node5_add_node1(void){
+void test_avlAdd_given_node10_node5_add_node1(void){
   initNode(&node10, &node5, NULL, -1);
 
   initNode(&node5, NULL, NULL, 0);
@@ -132,7 +132,7 @@ void test_AddAvl_given_node10_node5_add_node1(void){
 
   Node *root = &node10;
   Try{
-    heightChanged = addAvl(&root, &node1);
+    heightChanged = _avlAdd(&root, &node1);
   }Catch(ex){
     dumpException(ex);
   }
@@ -149,14 +149,14 @@ void test_AddAvl_given_node10_node5_add_node1(void){
  *                             \
  *                             node10
  */
-void test_addAvl_given_node15_node5_add_node10(void){
+void test_avlAdd_given_node15_node5_add_node10(void){
   initNode(&node15, &node5, NULL, -1);
   initNode(&node5, NULL, NULL, 0);
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node15;
   Try{
-    heightChanged = addAvl(&root, &node10);
+    heightChanged = _avlAdd(&root, &node10);
   }Catch(ex){
     dumpException(ex);
   }
@@ -175,14 +175,14 @@ void test_addAvl_given_node15_node5_add_node10(void){
  *
  *
  */
-void test_addAvl_given_node5_node15_add_node10_expect_rotateRL(void){
+void test_avlAdd_given_node5_node15_add_node10_expect_rotateRL(void){
   initNode(&node5, NULL, &node15, 1);
   initNode(&node15, NULL, NULL, 0);
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node5;
   Try{
-    heightChanged = addAvl(&root, &node10);
+    heightChanged = _avlAdd(&root, &node10);
   }Catch(ex){
     dumpException(ex);
   }
@@ -201,7 +201,7 @@ void test_addAvl_given_node5_node15_add_node10_expect_rotateRL(void){
 *             node20              10  20
 *                   
  */
-void test_addAvl_parent_noHeightChanged_add_10(void){
+void test_avlAdd_parent_noHeightChanged_add_10(void){
   initNode(&node5, &node1, &node15, 1);
   initNode(&node15, NULL, &node20, 1);
   initNode(&node1, NULL, NULL, 0);
@@ -211,7 +211,7 @@ void test_addAvl_parent_noHeightChanged_add_10(void){
 
   Node *root = &node5;
   Try{
-    heightChanged = addAvl(&root, &node10);
+    heightChanged = _avlAdd(&root, &node10);
   }Catch(ex){
     dumpException(ex);
   }
@@ -219,7 +219,7 @@ void test_addAvl_parent_noHeightChanged_add_10(void){
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 1);
   TEST_ASSERT_EQUAL_NODE(&node15, &node10, &node20, 0);
 
-  //TODO change bf after rotate
+  //TODO change balanceFactor after rotate
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, NULL, NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node20, NULL, NULL, 0);
@@ -236,7 +236,7 @@ void test_addAvl_parent_noHeightChanged_add_10(void){
  *                                           node15
  *
  */
-void test_addAvl_given_above_expect_rotateRL(void){
+void test_avlAdd_given_above_expect_rotateRL(void){
   initNode(&node5, &node1, &node10, 1);
   initNode(&node10, NULL, &node20, 1);
   initNode(&node1, NULL, NULL, 0);
@@ -245,7 +245,7 @@ void test_addAvl_given_above_expect_rotateRL(void){
 
   Node *root = &node5;
   Try{
-    heightChanged = addAvl(&root, &node15);
+    heightChanged = _avlAdd(&root, &node15);
   }Catch(ex){
     dumpException(ex);
   }
@@ -253,7 +253,7 @@ void test_addAvl_given_above_expect_rotateRL(void){
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 1);
   TEST_ASSERT_EQUAL_NODE(&node15, &node10 , &node20, 0);
 
-  //TODO change bf after rotate
+  //TODO change balanceFactor after rotate
   TEST_ASSERT_EQUAL_NODE(&node1, NULL , NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node20, NULL , NULL, 0);
@@ -272,7 +272,7 @@ void test_addAvl_given_above_expect_rotateRL(void){
  *                                                          node15
  *
  */
-void test_addAvl_given_above_expect_rotateRL__with_2_parents(void){
+void test_avlAdd_given_above_expect_rotateRL__with_2_parents(void){
   initNode(&node3, &node2, &node5, 1);
   initNode(&node2, &node1, NULL, -1);
   initNode(&node5, &node4, &node10, 1);
@@ -285,7 +285,7 @@ void test_addAvl_given_above_expect_rotateRL__with_2_parents(void){
 
   Node *root = &node3;
   Try{
-    heightChanged = addAvl(&root, &node15);
+    heightChanged = _avlAdd(&root, &node15);
   }Catch(ex){
     dumpException(ex);
   }
@@ -306,7 +306,7 @@ void test_addAvl_given_above_expect_rotateRL__with_2_parents(void){
  *           \     
  *          node20
  */
-void test_addAvl_withExistingValue(void){
+void test_avlAdd_withExistingValue(void){
   initNode(&node5, &node1, &node10, 1);
   initNode(&node10, NULL, &node20, 1);
   initNode(&node1, NULL, NULL, 0);
@@ -315,7 +315,7 @@ void test_addAvl_withExistingValue(void){
   Node *root = &node5;
   Try
   {
-    heightChanged = addAvl(&root, &node10);
+    heightChanged = _avlAdd(&root, &node10);
     TEST_FAIL_MESSAGE("same value added to avlTree but no exception thrown");
   }
   Catch(ex)

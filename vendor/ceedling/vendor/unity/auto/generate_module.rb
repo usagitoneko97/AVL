@@ -124,7 +124,7 @@ class UnityModuleGenerator
   ############################
   def files_to_operate_on(module_name, pattern = nil)
     # strip any leading path information from the module name and save for later
-    subfolder = File.dirname(module_name)
+    subalanceFactorolder = File.dirname(module_name)
     module_name = File.basename(module_name)
 
     # create triad definition
@@ -148,7 +148,7 @@ class UnityModuleGenerator
         submodule_name = create_filename(module_name, pattern_file)
         filename = cfg[:prefix] + submodule_name + cfg[:ext]
         files << {
-          path: (Pathname.new("#{cfg[:path]}#{subfolder}") + filename).cleanpath,
+          path: (Pathname.new("#{cfg[:path]}#{subalanceFactorolder}") + filename).cleanpath,
           name: submodule_name,
           template: cfg[:template],
           boilerplate: cfg[:boilerplate],

@@ -11,35 +11,35 @@ int heightChanged;
  * @param  *nodeToAdd: node structure to add
  * @retval height change status of the avl tree after addition
  */
-int addAvl(Node **rootPtr, Node *nodeToAdd){
+int _avlAdd(Node **rootPtr, Node *nodeToAdd){
   if(*(rootPtr) == NULL){
     nodeToAdd->left = NULL;
     nodeToAdd->right = NULL;
-    nodeToAdd->bf = 0;
+    nodeToAdd->balanceFactor = 0;
     *rootPtr = nodeToAdd;
     return CHANGED;
   }
   else{
     if(nodeToAdd->data > (*(rootPtr))->data){
-      heightChanged = addAvl(&(*(rootPtr))->right, nodeToAdd);
+      heightChanged = _avlAdd(&(*(rootPtr))->right, nodeToAdd);
       // (*rootPtr)->right = (*rootPtr);
-      //calc bf
-      // (*rootPtr)->bf ++;
+      //calc balanceFactor
+      // (*rootPtr)->balanceFactor ++;
       if(heightChanged == CHANGED){
-        (*rootPtr)->bf ++;
-        if((*rootPtr)->bf == 0){
+        (*rootPtr)->balanceFactor ++;
+        if((*rootPtr)->balanceFactor == 0){
           return NO_CHANGED;
         }
       }
       else {
         return NO_CHANGED;
       }
-      //  (*rootPtr)->bf = calcBF(*rootPtr);
-      if ((*rootPtr)->bf != 2)
+      //  (*rootPtr)->balanceFactor = calcbalanceFactor(*rootPtr);
+      if ((*rootPtr)->balanceFactor != 2)
       {
         return CHANGED;
       }
-      //change in structure of tree (decreasing level), will results in no change in the bf
+      //change in structure of tree (decreasing level), will results in no change in the balanceFactor
       if(avlBalanceRightTree(rootPtr) == CHANGED){
         return NO_CHANGED;
       }
@@ -49,20 +49,20 @@ int addAvl(Node **rootPtr, Node *nodeToAdd){
     }
     else if (nodeToAdd->data < (*(rootPtr))->data)
     {
-      heightChanged = addAvl(&(*(rootPtr))->left, nodeToAdd);
+      heightChanged = _avlAdd(&(*(rootPtr))->left, nodeToAdd);
       if(heightChanged == CHANGED){
-        (*rootPtr)->bf --;
-        if ((*rootPtr)->bf == 0)
+        (*rootPtr)->balanceFactor --;
+        if ((*rootPtr)->balanceFactor == 0)
         {
           return NO_CHANGED;
         }
       }
       else  
         return NO_CHANGED;
-      if((*rootPtr)->bf != -2){
+      if((*rootPtr)->balanceFactor != -2){
         return CHANGED;
       }
-      //change in structure of tree (decreasing level), will results in no change in the bf
+      //change in structure of tree (decreasing level), will results in no change in the balanceFactor
       if (avlBalanceLeftTree(rootPtr) == CHANGED)
       {
         return NO_CHANGED;
@@ -78,4 +78,6 @@ int addAvl(Node **rootPtr, Node *nodeToAdd){
   }
 }
 
-
+void avlAdd(Node **root, Node *nodeToAdd){
+  _avlAdd(root, nodeToAdd);
+}
