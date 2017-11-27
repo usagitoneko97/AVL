@@ -18,7 +18,7 @@ Node *avlRemove(Node **rootPtr, int data, CompareWithVoidPtr compare)
         printf("deleted value doesn't exist!");
     }
     return deletedNode;
-}
+}   
 
 Node *tempNode;
 

@@ -16,14 +16,30 @@ void tearDown(void)
 /**  
  *    NULL    --->    NULL
  */
-void xtest_deleteLeaf_given_NULL(void){
+void test_deleteLeaf_given_NULL(void){
     IntegerNode *root;
     root = NULL;
 
-    Node *deletedNode = avlRemoveIntegerWithValue(root, 0);
+    Node *deletedNode = avlRemoveIntegerWithValue(&root, 0);
     TEST_ASSERT_NULL(deletedNode);
     TEST_ASSERT_NULL(root);
-}   
+}
+
+/** 
+ *    10    delete node 15    10
+ *   /         ---->          /
+ *  5                        5
+ */
+void test_delete_remove_node_that_not_exists(void){
+    initNode(&node10, &node5, NULL, -1);
+    initNode(&node5, NULL, NULL, -1);
+    IntegerNode *root;
+    root = &node10;
+
+    Node *deletedNode = avlRemoveIntegerWithValue(&root, 15);
+    TEST_ASSERT_NULL(deletedNode);
+
+}
 /** 
  *       delete node10
  *  10      ---->         NULL
