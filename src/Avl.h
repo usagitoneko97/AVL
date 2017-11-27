@@ -3,6 +3,7 @@
 
 #include "Node.h"
 
+
 int _avlAdd(Node **root, Node *nodeToAdd);
 void avlAdd(Node **root, Node *nodeToAdd);
 int avlBalanceLeftTree(Node **rootPtr);

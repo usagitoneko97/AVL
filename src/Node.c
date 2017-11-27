@@ -7,16 +7,36 @@
  * @param  *data: data to compare
  * @retval result
  */
-int compareInt(void *data, Node *node)
+int compareInt(Node *node1, Node *node2)
 {
-    if(*(int*)data > node->data){
+    IntegerNode *intNode1 = (IntegerNode *)node1;
+    IntegerNode *intNode2 = (IntegerNode *)node2;
+    if (intNode1->data > intNode2->data)
+    {
         return 1;
     }
-    else if (*(int *)data < node->data)
+    else if (intNode1->data < intNode2->data)
     {
         return -1;
     }
     else{
+        return 0;
+    }
+}
+
+int compareIntwithVoidPtr(void *data1, Node *data2){
+    int data1int = *((int*)data1);
+    IntegerNode *intNode2 = (IntegerNode *)data2;
+    if (data1int > intNode2->data)
+    {
+        return 1;
+    }
+    else if (data1int < intNode2->data)
+    {
+        return -1;
+    }
+    else
+    {
         return 0;
     }
 }

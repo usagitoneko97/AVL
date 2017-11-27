@@ -3,9 +3,8 @@
 
 #include "Node.h"
 Node *avlRemoveNearestLeft(Node **rootPtr, int *heightChangedStatus);
-Node *avlRemove(Node **rootPtr, int data, int (*compare)(void *, Node *));
-Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, int (*compare)(void *, Node *));
-Node *avlFindMin(Node *root);
-Node *avlFindMax(Node *root);
+Node *avlRemove(Node **rootPtr, int data, CompareWithVoidPtr compare);
+Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, CompareWithVoidPtr compare);
 
+#define avlRemoveIntegerWithValue(root, data)   avlRemove((Node **)root, data, compareIntwithVoidPtr)
 #endif // _DELETEAVL_H

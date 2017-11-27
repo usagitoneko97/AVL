@@ -4,9 +4,18 @@
 #include "NodeHelper.h"
 #include "NodeVerifier.h"
 
+
+#define _rotateRight(node)            rotateRight((Node*)node)
+#define _rotateRightLeft(node)        rotateRightLeft((Node *)node)
+#define _rotateLeft(node)             rotateLeft((Node *)node)
+#define _rotateLeftRight(node)        rotateleftRight((Node *)node)
+#define _avlBalanceLeftTree(root)     avlBalanceLeftTree((Node**)root)
+#define _avlBalanceRightTree(root)    avlBalanceRightTree((Node**)root)
+#define _nodeHeight(root)             nodeHeight((Node*)(root))
+
 void setUp(void)
 {
-  initNodeData();
+  initIntegerNodeData();
 }
 
 void tearDown(void)
@@ -23,13 +32,13 @@ void tearDown(void)
  *   /
  *  5
  */
-void test_rotateRight_m2_m1(void){
+void test__rotateRight_m2_m1(void){
   initNode(&node30, &node10, NULL, -2);
   initNode(&node10, &node5, NULL, -1);
   initNode(&node5, NULL, NULL, 0);
 
   Node *root;
-  root = rotateRight(&node30);
+  root = _rotateRight(&node30);
 
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, -1);
   TEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, -2);
@@ -48,14 +57,14 @@ void test_rotateRight_m2_m1(void){
  *   / \                  /
  *  5  20               20
  */
-void test_rotateRight_m2_m0(void)
+void test__rotateRight_m2_m0(void)
 {
     initNode(&node30, &node10, NULL, -2);
     initNode(&node10, &node5, &node20, 0);
     initNode(&node5, NULL, NULL, 0);
     initNode(&node20, NULL, NULL, 0);
     Node *root;
-    root = rotateRight(&node30);
+    root = _rotateRight(&node30);
     TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, 0);
     TEST_ASSERT_EQUAL_NODE(&node30, &node20, NULL, -2);
     TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
@@ -73,12 +82,12 @@ void test_rotateRight_m2_m0(void)
  *        \
  *         20
  */
-void test_rotateLeft_p2_p1(void){
+void test__rotateLeft_p2_p1(void){
   initNode(&node5, NULL, &node10, 2);
   initNode(&node10, NULL,  &node20, 1);
   initNode(&node20, NULL, NULL, 0);
 
-  rotateLeft(&node5);
+  _rotateLeft(&node5);
 
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node20, 1);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 2);
@@ -96,14 +105,14 @@ void test_rotateLeft_p2_p1(void){
  *       / \                    \
  *      30  40                   30
  */
-void test_rotateLeft_p2_p0(void){
+void test__rotateLeft_p2_p0(void){
   initNode(&node30, NULL, NULL, 0);
   initNode(&node40, NULL, NULL, 0);
   initNode(&node35, &node30, &node40, 0);
   initNode(&node25,NULL ,&node35, 0);
 
   Node *root;
-  root = rotateLeft(&node25);
+  root = _rotateLeft(&node25);
   TEST_ASSERT_EQUAL_NODE(&node35, &node25, &node40, 0);
   TEST_ASSERT_EQUAL_NODE(&node25, NULL, &node30, 0);
   TEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, 0);
@@ -126,7 +135,7 @@ void test_rotateLeft_p2_p0(void){
  *   /  \
  *  30  40
  */
-void test_rotateLeftRight(void){
+void test__rotateLeftRight(void){
   initNode(&node45, &node25, &node50, 0);
   initNode(&node25, &node5, &node35, 0);
   initNode(&node35,&node30 ,&node40, 0);
@@ -136,7 +145,7 @@ void test_rotateLeftRight(void){
   initNode(&node50, NULL, NULL, 0);
 
   Node *root;
-  root = rotateleftRight(&node45);
+  root = _rotateLeftRight(&node45);
 
   TEST_ASSERT_EQUAL_NODE(&node35, &node25, &node45, 0);
   TEST_ASSERT_EQUAL_NODE(&node25, &node5, &node30, 0);
@@ -163,7 +172,7 @@ void test_rotateLeftRight(void){
  *         / \
  *        15  23
  */
-void test_rotateRightLeft_given_above_expect_rotateRL_w_grandChild_0(void){
+void test__rotateRightLeft_given_above_expect_rotateRL_w_grandChild_0(void){
   initNode(&node10, &node5 ,&node25, 0);
   initNode(&node5, NULL, NULL, 0);
   initNode(&node25, &node20, &node50, 0);
@@ -171,7 +180,7 @@ void test_rotateRightLeft_given_above_expect_rotateRL_w_grandChild_0(void){
   initNode(&node23, NULL, NULL, 0);
   initNode(&node50, NULL, NULL, 0);
 
-  rotateRightLeft(&node10);
+  _rotateRightLeft(&node10);
 
   TEST_ASSERT_EQUAL_NODE(&node20, &node10, &node25, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
@@ -190,7 +199,7 @@ void test_nodeHeight_given_1(void){
   initNode(&node1, NULL, &node5, 1);
   initNode(&node5, NULL, NULL, 0);
 
-  int height = nodeHeight(&node1);
+  int height = _nodeHeight(&node1);
 
   TEST_ASSERT_EQUAL(1, height);
 }
@@ -210,7 +219,7 @@ void test_nodeHeight_given_3(void){
   initNode(&node10, NULL, &node20, 1);
   initNode(&node20, NULL, NULL, 0);
 
-  TEST_ASSERT_EQUAL(3, nodeHeight(&node1));
+  TEST_ASSERT_EQUAL(3, _nodeHeight(&node1));
 }
 
 /**
@@ -231,7 +240,7 @@ void test_nodeHeight_given_above(void){
   initNode(&node30, NULL, &node35, 0);
   initNode(&node35, NULL, NULL, 3);
 
-  TEST_ASSERT_EQUAL(3, nodeHeight(&node25));
+  TEST_ASSERT_EQUAL(3, _nodeHeight(&node25));
 }
 
 //--------------------------------------------------------------------------
@@ -248,15 +257,15 @@ void test_nodeHeight_given_above(void){
  *   /
  *  5
  */
-void test_avlBalanceLeftTree_given_30_10_5(void)
+void test__avlBalanceLeftTree_given_30_10_5(void)
 {
   initNode(&node30, &node10, NULL, -2);
   initNode(&node10, &node5, NULL, -1);
   initNode(&node5, NULL, NULL, 0);
 
-  Node *root;
+  IntegerNode *root;
   root = (&node30);
-  avlBalanceLeftTree(&root);
+  _avlBalanceLeftTree(&root);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, 0);
   TEST_ASSERT_EQUAL_NODE(&node30, NULL, NULL, 0);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
@@ -274,15 +283,15 @@ void test_avlBalanceLeftTree_given_30_10_5(void)
  *   / \                  /
  *  5  20               20
  */
-void test_avlBalanceLeftTree_given30_10_5_20(void)
+void test__avlBalanceLeftTree_given30_10_5_20(void)
 {
   initNode(&node30, &node10, NULL, -2);
   initNode(&node10, &node5, &node20, 0);
   initNode(&node5, NULL, NULL, 0);
   initNode(&node20, NULL, NULL, 0);
-  Node *root;
+  IntegerNode *root;
   root = &node30;
-  avlBalanceLeftTree(&root);
+  _avlBalanceLeftTree(&root);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node30, 1);
   TEST_ASSERT_EQUAL_NODE(&node30, &node20, NULL, -1);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
@@ -305,9 +314,9 @@ void test_avBalanceRightTree_given_5_10_20(void)
   initNode(&node10, NULL, &node20, 1);
   initNode(&node20, NULL, NULL, 0);
 
-  Node *root;
+  IntegerNode *root;
   root = &node5;
-  avlBalanceRightTree(&root);
+  _avlBalanceRightTree(&root);
 
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node20, 0);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
@@ -325,16 +334,16 @@ void test_avBalanceRightTree_given_5_10_20(void)
  *       / \                    \
  *      30  40                   30
  */
-void test_avlBalanceRightTree_given_25_35_30_40(void)
+void test__avlBalanceRightTree_given_25_35_30_40(void)
 {
   initNode(&node30, NULL, NULL, 0);
   initNode(&node40, NULL, NULL, 0);
   initNode(&node35, &node30, &node40, 0);
   initNode(&node25, NULL, &node35, 2);
 
-  Node *root;
+  IntegerNode *root;
   root = (&node25);
-  avlBalanceRightTree(&root);
+  _avlBalanceRightTree(&root);
 
   TEST_ASSERT_EQUAL_NODE(&node35, &node25, &node40, -1);
   TEST_ASSERT_EQUAL_NODE(&node25, NULL, &node30, 1);
@@ -356,7 +365,7 @@ void test_avlBalanceRightTree_given_25_35_30_40(void)
  *     \
  *     20
  */
-void test_avlBalanceLeftTree_given_above_expect_rotateLR_grandChild_1(void)
+void test__avlBalanceLeftTree_given_above_expect_rotateLR_grandChild_1(void)
 {
   initNode(&node30, &node10, &node50, -2);
   initNode(&node10, &node5, &node15, 1);
@@ -365,9 +374,9 @@ void test_avlBalanceLeftTree_given_above_expect_rotateLR_grandChild_1(void)
   initNode(&node5, NULL, NULL, 0);
   initNode(&node50, NULL, NULL, 0);
 
-  Node *root;
+  IntegerNode *root;
   root = &node30;
-  avlBalanceLeftTree(&root);
+  _avlBalanceLeftTree(&root);
   TEST_ASSERT_EQUAL_NODE(&node15, &node10, &node30, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, NULL, -1);
   TEST_ASSERT_EQUAL_NODE(&node30, &node20, &node50, 0);
@@ -390,7 +399,7 @@ void test_avlBalanceLeftTree_given_above_expect_rotateLR_grandChild_1(void)
  *   /  \
  *  15    25
  */
-void test_avlBalanceLeftTree_given_above_expect_rotateLR_w_grandChild_0(void)
+void test__avlBalanceLeftTree_given_above_expect_rotateLR_w_grandChild_0(void)
 {
   initNode(&node30, &node10, &node50, -2);
   initNode(&node10, &node5, &node20, 1);
@@ -400,9 +409,9 @@ void test_avlBalanceLeftTree_given_above_expect_rotateLR_w_grandChild_0(void)
   initNode(&node5, NULL, NULL, 0);
   initNode(&node50, NULL, NULL, 0);
 
-  Node *root;
+  IntegerNode *root;
   root = &node30;
-  avlBalanceLeftTree(&root);
+  _avlBalanceLeftTree(&root);
   TEST_ASSERT_EQUAL_NODE(&node20, &node10, &node30, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
   TEST_ASSERT_EQUAL_NODE(&node30, &node25, &node50, 0);
@@ -426,7 +435,7 @@ void test_avlBalanceLeftTree_given_above_expect_rotateLR_w_grandChild_0(void)
  *   /
  *  15
  */
-void test_avlBalanceLeftTree_given_above_expect_rotateLR_w_grandChild_m1(void)
+void test__avlBalanceLeftTree_given_above_expect_rotateLR_w_grandChild_m1(void)
 {
   initNode(&node30, &node10, &node50, -2);
   initNode(&node10, &node5, &node20, 1);
@@ -435,9 +444,9 @@ void test_avlBalanceLeftTree_given_above_expect_rotateLR_w_grandChild_m1(void)
   initNode(&node5, NULL, NULL, 0);
   initNode(&node50, NULL, NULL, 0);
 
-  Node *root;
+  IntegerNode *root;
   root = &node30;
-  avlBalanceLeftTree(&root);
+  _avlBalanceLeftTree(&root);
   TEST_ASSERT_EQUAL_NODE(&node20, &node10, &node30, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
   TEST_ASSERT_EQUAL_NODE(&node30, NULL, &node50, 1);
@@ -460,7 +469,7 @@ void test_avlBalanceLeftTree_given_above_expect_rotateLR_w_grandChild_m1(void)
  *         /
  *        15
  */
-void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_m1(void)
+void test__avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_m1(void)
 {
   initNode(&node10, &node5, &node25, 2);
   initNode(&node5, NULL, NULL, 0);
@@ -469,9 +478,9 @@ void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_m1(void)
   initNode(&node15, NULL, NULL, 0);
   initNode(&node50, NULL, NULL, 0);
 
-  Node *root;
+  IntegerNode *root;
   root = &node10;
-  avlBalanceRightTree(&root);
+  _avlBalanceRightTree(&root);
 
   TEST_ASSERT_EQUAL_NODE(&node20, &node10, &node25, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
@@ -494,7 +503,7 @@ void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_m1(void)
  *           \
  *           23
  */
-void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_1(void)
+void test__avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_1(void)
 {
   initNode(&node10, &node5, &node25, 2);
   initNode(&node5, NULL, NULL, 0);
@@ -503,9 +512,9 @@ void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_1(void)
   initNode(&node23, NULL, NULL, 0);
   initNode(&node50, NULL, NULL, 0);
 
-  Node *root;
+  IntegerNode *root;
   root = &node10;
-  avlBalanceRightTree(&root);
+  _avlBalanceRightTree(&root);
 
   TEST_ASSERT_EQUAL_NODE(&node20, &node10, &node25, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, NULL, -1);
@@ -528,7 +537,7 @@ void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_1(void)
  *         / \
  *        15  23
  */
-void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_0(void)
+void test__avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_0(void)
 {
   initNode(&node10, &node5, &node25, 2);
   initNode(&node5, NULL, NULL, 0);
@@ -537,9 +546,9 @@ void test_avlBalanceRightTree_given_above_expect_rotateRL_w_grandChild_0(void)
   initNode(&node23, NULL, NULL, 0);
   initNode(&node50, NULL, NULL, 0);
 
-  Node *root;
+  IntegerNode *root;
   root = &node10;
-  avlBalanceRightTree(&root);
+  _avlBalanceRightTree(&root);
 
   TEST_ASSERT_EQUAL_NODE(&node20, &node10, &node25, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);

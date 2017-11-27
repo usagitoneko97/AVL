@@ -2,26 +2,27 @@
 #include "rotate.h"
 #include "Exception.h"
 #include "CException.h"
-
+#include <stdio.h>
 int heightChanged;
 
 /** 
  * @brief  add a value to the avl tree
  * @param  **rootPtr: pointer to the avl tree
- * @param  *nodeToAdd: node structure to add
+ * @param  *NodeToAdd: Node structure to add
  * @retval height change status of the avl tree after addition
  */
-int _avlAdd(Node **rootPtr, Node *nodeToAdd){
+int _avlAdd(Node **rootPtr, Node *NodeToAdd, Compare compare){
   if(*(rootPtr) == NULL){
-    nodeToAdd->left = NULL;
-    nodeToAdd->right = NULL;
-    nodeToAdd->balanceFactor = 0;
-    *rootPtr = nodeToAdd;
+    NodeToAdd->left = NULL;
+    NodeToAdd->right = NULL;
+    NodeToAdd->balanceFactor = 0;
+    *rootPtr = NodeToAdd;
     return CHANGED;
   }
   else{
-    if(nodeToAdd->data > (*(rootPtr))->data){
-      heightChanged = _avlAdd(&(*(rootPtr))->right, nodeToAdd);
+    if(compare(NodeToAdd, *rootPtr) == 1)
+    {
+      heightChanged = _avlAdd(&(*(rootPtr))->right, NodeToAdd, compare);
       // (*rootPtr)->right = (*rootPtr);
       //calc balanceFactor
       // (*rootPtr)->balanceFactor ++;
@@ -47,9 +48,9 @@ int _avlAdd(Node **rootPtr, Node *nodeToAdd){
         return CHANGED;
       }
     }
-    else if (nodeToAdd->data < (*(rootPtr))->data)
+    else if(compare(NodeToAdd, *rootPtr) == -1)
     {
-      heightChanged = _avlAdd(&(*(rootPtr))->left, nodeToAdd);
+      heightChanged = _avlAdd(&(*(rootPtr))->left, NodeToAdd, compare);
       if(heightChanged == CHANGED){
         (*rootPtr)->balanceFactor --;
         if ((*rootPtr)->balanceFactor == 0)
@@ -73,11 +74,11 @@ int _avlAdd(Node **rootPtr, Node *nodeToAdd){
       }
     }
     else{
-      Throw(createException("node to add is already exist in the avl tree", NODE_ADD_EXIST));
+      Throw(createException("Node to add is already exist in the avl tree", NODE_ADD_EXIST));
     }
   }
 }
 
-void avlAdd(Node **root, Node *nodeToAdd){
-  _avlAdd(root, nodeToAdd);
+void avlAdd(Node **root, Node *NodeToAdd, Compare compare){
+  _avlAdd(root, NodeToAdd, compare);
 }

@@ -10,7 +10,8 @@
  * @retval non null: the deleted value
  *         null    : data to be deleted doesn't exost in the avl tree
  */
-Node *avlRemove(Node **rootPtr, int data, int (*compare)(void *data, Node *node)){
+Node *avlRemove(Node **rootPtr, int data, CompareWithVoidPtr compare)
+{
     int heightChangedTemp;
     Node *deletedNode = _avlRemove(rootPtr, &data, &heightChangedTemp, compare);
     if(deletedNode == NULL){
@@ -68,7 +69,7 @@ Node *avlRemoveNearestLeft(Node **rootPtr, int *heightChangedStatus){
  * @retval non null: the deleted value
  *         null    : data to be deleted doesn't exost in the avl tree
  */
-Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, int (*compare)(void *, Node *))
+Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, CompareWithVoidPtr compare)
 {
     int min;
     Node *temp, *temp1;
@@ -174,18 +175,4 @@ Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, int (*com
         return temp;
     }
 	return NULL;
-}
-
-
-Node *avlFindMin(Node *root){
-    if(root->left == NULL)
-        return root;
-    return avlFindMin(root->left);
-}
-
-Node *avlFindMax(Node *root)
-{
-    if (root->right == NULL)
-        return root;
-    return avlFindMin(root->right);
 }

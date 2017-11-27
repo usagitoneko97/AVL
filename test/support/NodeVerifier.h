@@ -5,6 +5,6 @@
 #define TEST_ASSERT_EQUAL_NODE(node, left,right,balanceFactor) \
                           testAssertEqualNode(node, left,right,balanceFactor,__LINE__)
 
-void testAssertEqualNode(Node *node, Node *left, Node *right, int balanceFactor ,int lineNo);
+void testAssertEqualNode(IntegerNode *node, IntegerNode *left, IntegerNode *right, int balanceFactor, int lineNo);
 
 #endif // _NODEVERIFIER_H
