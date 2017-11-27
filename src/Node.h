@@ -6,7 +6,7 @@ typedef struct Node Node;
 struct Node{
   Node *left;
   Node *right;
-  int bf;
+  int balanceFactor;
   int data;
 };
 

@@ -27,8 +27,8 @@ void initNodeData(void){
   node23.data = 23;
 }
 
-void initNode(Node *node, Node *left, Node *right, int bf){
+void initNode(Node *node, Node *left, Node *right, int balanceFactor){
   node->left = left;
   node->right = right;
-  node->bf =bf;
+  node->balanceFactor =balanceFactor;
 }
