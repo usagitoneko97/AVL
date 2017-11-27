@@ -3,11 +3,11 @@
 /** 
  * @brief  return 1 when node > data
  * @note   
- * @param  *node: 
- * @param  *data: 
+ * @param  *node: node to compare
+ * @param  *data: data to compare
  * @retval result
  */
-int compare(void *data, Node *node)
+int compareInt(void *data, Node *node)
 {
     if(*(int*)data > node->data){
         return 1;

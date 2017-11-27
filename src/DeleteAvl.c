@@ -10,9 +10,9 @@
  * @retval non null: the deleted value
  *         null    : data to be deleted doesn't exost in the avl tree
  */
-Node *avlDelete(Node **rootPtr, int data){
+Node *avlDelete(Node **rootPtr, int data, int (*compare)(void *data, Node *node)){
     int heightChangedTemp;
-    Node *deletedNode = _avlDelete(rootPtr, &data, &heightChangedTemp);
+    Node *deletedNode = _avlDelete(rootPtr, &data, &heightChangedTemp, compare);
     if(deletedNode == NULL){
         printf("deleted value doesn't exist!");
     }
@@ -68,7 +68,8 @@ Node *avlDeleteNearestLeft(Node **rootPtr, int *heightChangedStatus){
  * @retval non null: the deleted value
  *         null    : data to be deleted doesn't exost in the avl tree
  */
-Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus){
+Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus, int (*compare)(void *, Node *))
+{
     int min;
     Node *temp, *temp1;
     if((*rootPtr) == NULL)
@@ -145,7 +146,7 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus){
 		return NULL;
     }
     else if (compare(data, (*rootPtr)) == 1){
-        temp = _avlDelete(&(*(rootPtr))->right, data, heightChangedStatus);
+        temp = _avlDelete(&(*(rootPtr))->right, data, heightChangedStatus, compare);
     
         if (*heightChangedStatus == CHANGED)
         {
@@ -159,7 +160,7 @@ Node *_avlDelete(Node **rootPtr, void *data, int *heightChangedStatus){
         return temp;
     }
     else{
-        temp = _avlDelete(&(*(rootPtr))->left, data, heightChangedStatus);
+        temp = _avlDelete(&(*(rootPtr))->left, data, heightChangedStatus, compare);
         if (*heightChangedStatus == CHANGED)
         {
             (*rootPtr)->bf++;
