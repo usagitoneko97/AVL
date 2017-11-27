@@ -6,6 +6,7 @@
 #include "Node.h"
 #include "Exception.h"
 #include "CException.h"
+#include "AvlInteger.h"
 
 CEXCEPTION_T ex;
 int heightChanged;

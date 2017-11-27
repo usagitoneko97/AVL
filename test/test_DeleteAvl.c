@@ -4,6 +4,7 @@
 #include "NodeVerifier.h"
 #include "rotate.h"
 #include "Node.h"
+#include "AvlInteger.h"
 void setUp(void)
 {
     initIntegerNodeData();

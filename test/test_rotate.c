@@ -3,7 +3,7 @@
 #include "Node.h"
 #include "NodeHelper.h"
 #include "NodeVerifier.h"
-
+#include "AvlInteger.h"
 
 #define _rotateRight(node)            rotateRight((Node*)node)
 #define _rotateRightLeft(node)        rotateRightLeft((Node *)node)
