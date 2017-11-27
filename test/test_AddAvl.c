@@ -4,6 +4,11 @@
 #include "NodeVerifier.h"
 #include "rotate.h"
 #include "Node.h"
+#include "Exception.h"
+#include "CException.h"
+
+CEXCEPTION_T ex;
+int heightChanged;
 void setUp(void)
 {
   initNodeData();
@@ -19,7 +24,11 @@ void tearDown(void)
 void test_AddAvl_given_NULL_add_1Node(void)
 {
   Node *root = NULL;
-  addAvl(&root, &node5);
+  Try{
+    addAvl(&root, &node5);
+  }Catch(ex){
+    dumpException(ex);
+  }  
 
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
 }
@@ -34,7 +43,11 @@ void test_AddAvl_given_node1_add_node5(void){
   initNode(&node5, &node5, &node5, 0);
 
   Node *root = &node1;
-  addAvl(&root, &node5);
+  Try{
+    addAvl(&root, &node5);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, &node5, 1);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL, NULL, 0);
 }
@@ -49,7 +62,11 @@ void test_AddAvl_given_node5_add_node1(void){
   initNode(&node5, NULL, NULL, 0);
 
   Node *root = &node5;
-  addAvl(&root, &node1);
+  Try{
+    addAvl(&root, &node1);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, NULL, -1);
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
 }
@@ -65,7 +82,11 @@ void test_addAvl_given_10_5_add_20(void){
   initNode(&node20, NULL, NULL, 0);
 
   Node *root = &node10;
-  addAvl(&root, &node20);
+  Try{
+    addAvl(&root, &node20);
+  }Catch(ex){
+    dumpException(ex);
+  }
 
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node20, 0);
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
@@ -84,7 +105,11 @@ void test_AddAvl_given_node1_node5_add_node10(void){
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node1;
-  int heightChanged = addAvl(&root, &node10);
+  Try{
+    heightChanged = addAvl(&root, &node10);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1 , &node10, 0);
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
@@ -106,7 +131,11 @@ void test_AddAvl_given_node10_node5_add_node1(void){
   initNode(&node1, &node1, &node1, 0);
 
   Node *root = &node10;
-  int heightChanged = addAvl(&root, &node1);
+  Try{
+    heightChanged = addAvl(&root, &node1);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node10, 0);
   TEST_ASSERT_EQUAL_NODE(&node10, NULL , NULL, 0);
@@ -126,7 +155,11 @@ void test_addAvl_given_node15_node5_add_node10(void){
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node15;
-  int heightChanged = addAvl(&root, &node10);
+  Try{
+    heightChanged = addAvl(&root, &node10);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
   TEST_ASSERT_EQUAL_NODE(&node5, NULL , NULL, 0);
@@ -148,7 +181,11 @@ void test_addAvl_given_node5_node15_add_node10_expect_rotateRL(void){
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node5;
-  int heightChanged = addAvl(&root, &node10);
+  Try{
+    heightChanged = addAvl(&root, &node10);
+  }Catch(ex){
+    dumpException(ex);
+  }
 
   TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node10, &node5, &node15, 0);
@@ -173,7 +210,11 @@ void test_addAvl_parent_noHeightChanged_add_10(void){
   initNode(&node10, NULL, NULL, 0);
 
   Node *root = &node5;
-  int heightChanged = addAvl(&root, &node10);
+  Try{
+    heightChanged = addAvl(&root, &node10);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 1);
   TEST_ASSERT_EQUAL_NODE(&node15, &node10, &node20, 0);
@@ -203,7 +244,11 @@ void test_addAvl_given_above_expect_rotateRL(void){
   initNode(&node15, NULL, NULL, 0);
 
   Node *root = &node5;
-  int heightChanged = addAvl(&root, &node15);
+  Try{
+    heightChanged = addAvl(&root, &node15);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node5, &node1, &node15, 1);
   TEST_ASSERT_EQUAL_NODE(&node15, &node10 , &node20, 0);
@@ -239,7 +284,11 @@ void test_addAvl_given_above_expect_rotateRL__with_2_parents(void){
   initNode(&node15, NULL, NULL, 0);
 
   Node *root = &node3;
-  int heightChanged = addAvl(&root, &node15);
+  Try{
+    heightChanged = addAvl(&root, &node15);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL(NO_CHANGED, heightChanged);
   TEST_ASSERT_EQUAL_NODE(&node3, &node2, &node5, 1);
   TEST_ASSERT_EQUAL_NODE(&node5, &node4, &node15, 1);
@@ -250,3 +299,25 @@ void test_addAvl_given_above_expect_rotateRL__with_2_parents(void){
   TEST_ASSERT_EQUAL_NODE(&node20, NULL , NULL, 0);
 }
 
+/**  
+ *     node5        
+ *   /     \       
+ * node1   node10  ---> add node10  expect throw exception
+ *           \     
+ *          node20
+ */
+void test_addAvl_withExistingValue(void){
+  initNode(&node5, &node1, &node10, 1);
+  initNode(&node10, NULL, &node20, 1);
+  initNode(&node1, NULL, NULL, 0);
+  initNode(&node20, NULL, NULL, 0);
+  initNode(&node15, NULL, NULL, 0);
+  Node *root = &node5;
+  Try
+  {
+    heightChanged = addAvl(&root, &node10);
+    TEST_FAIL_MESSAGE("same value added to avlTree but no exception thrown");
+  }
+  Catch(ex)
+  {}
+}

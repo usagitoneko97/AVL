@@ -1,5 +1,7 @@
 #include "AddAvl.h"
 #include "rotate.h"
+#include "Exception.h"
+#include "CException.h"
 
 int heightChanged;
 
@@ -45,7 +47,8 @@ int addAvl(Node **rootPtr, Node *nodeToAdd){
         return CHANGED;
       }
     }
-    else{
+    else if (nodeToAdd->data < (*(rootPtr))->data)
+    {
       heightChanged = addAvl(&(*(rootPtr))->left, nodeToAdd);
       if(heightChanged == CHANGED){
         (*rootPtr)->bf --;
@@ -69,7 +72,9 @@ int addAvl(Node **rootPtr, Node *nodeToAdd){
         return CHANGED;
       }
     }
-    // return (*rootPtr);
+    else{
+      Throw(createException("node to add is already exist in the avl tree", NODE_ADD_EXIST));
+    }
   }
 }
 
