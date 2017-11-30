@@ -7,6 +7,7 @@
 #include "Exception.h"
 #include "CException.h"
 #include "AvlInteger.h"
+#include "AvlString.h"
 
 CEXCEPTION_T ex;
 int heightChanged;
@@ -29,7 +30,7 @@ void testavlAddInteger_given_NULL_add_1Node(void)
     avlAddInteger(&root, &node5);
   }Catch(ex){
     dumpException(ex);
-  }  
+  }
 
   TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
 }
@@ -195,13 +196,13 @@ void testavlAddInteger_given_node5_node15_add_node10_expect_rotateRL(void){
   TEST_ASSERT_EQUAL_NODE(&node15, NULL , NULL, 0);
 }
 
-/** 
-*      node5                      5 
-*     /     \                   /  \ 
+/**
+*      node5                      5
+*     /     \                   /  \
 *   node1   node15     --->    1   15
 *             \                    / \
 *             node20              10  20
-*                   
+*
  */
 void testavlAddInteger_parent_noHeightChanged_add_10(void){
   initNode(&node5, &node1, &node15, 1);
@@ -301,11 +302,11 @@ void testavlAddInteger_given_above_expect_rotateRL__with_2_parents(void){
   TEST_ASSERT_EQUAL_NODE(&node20, NULL , NULL, 0);
 }
 
-/**  
- *     node5        
- *   /     \       
+/**
+ *     node5
+ *   /     \
  * node1   node10  ---> add node10  expect throw exception
- *           \     
+ *           \
  *          node20
  */
 void testavlAddInteger_withExistingValue(void){

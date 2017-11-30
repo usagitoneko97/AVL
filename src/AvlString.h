@@ -10,4 +10,5 @@ struct StrNode
     char *data;
 };
 
+int compareStr(char *str1, char *str2);
 #endif // _AVLSTRING_H
