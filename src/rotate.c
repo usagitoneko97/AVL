@@ -1,5 +1,5 @@
 #include "rotate.h"
-
+#include <stddef.h>
 /**
  *       25                      35
  *        \                     /  \
@@ -7,7 +7,7 @@
  *       / \                    \
  *      30  40                   30
  */
-/** 
+/**
  * @brief  rotate left of the avl tree
  * @param  *node: avl tree
  * @retval return the new root after rotation
@@ -33,7 +33,7 @@ Node *rotateLeft(Node *node){
  *   / \             /
  *  5  20          20
  */
-/** 
+/**
  * @brief  rotate right of the avl tree
  * @param  *node: avl tree
  * @retval return the new root after rotation
@@ -123,7 +123,7 @@ int nodeHeight(Node *root){
  *  -----------------------------------------------------------------
  */
 
- /** 
+ /**
   * @brief  balance right side of the tree pointed by rootptr
   * @param  **rootPtr: pointer to the avl tree
   * @retval height change status after avl rotation(if any)
@@ -181,7 +181,7 @@ int avlBalanceRightTree(Node **rootPtr)
   }
 }
 
-/** 
+/**
   * @brief  balance left side of the tree pointed by rootptr
   * @param  **rootPtr: pointer to the avl tree
   * @retval height change status after avl rotation(if any)
