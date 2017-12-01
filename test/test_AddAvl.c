@@ -11,6 +11,9 @@
 
 CEXCEPTION_T ex;
 int heightChanged;
+
+#define initNodeInt(node, left, right, bf)  initNode((Node*)node, (Node*)left, (Node*)right, bf);
+
 void setUp(void)
 {
   initIntegerNodeData();
@@ -41,8 +44,8 @@ void testavlAddInteger_given_NULL_add_1Node(void)
  *                      node5
  */
 void testavlAddInteger_given_node1_add_node5(void){
-  initNode(&node1, NULL, NULL, 0);
-  initNode(&node5, &node5, &node5, 0);
+  initNodeInt(&node1, NULL, NULL, 0);
+  initNodeInt(&node5, &node5, &node5, 0);
 
   IntegerNode *root = &node1;
   Node *rootNode = (Node *)root;
@@ -61,8 +64,8 @@ void testavlAddInteger_given_node1_add_node5(void){
  *                node1
  */
 void testavlAddInteger_given_node5_add_node1(void){
-  initNode(&node1, NULL, NULL, 0);
-  initNode(&node5, NULL, NULL, 0);
+  initNodeInt(&node1, NULL, NULL, 0);
+  initNodeInt(&node5, NULL, NULL, 0);
 
   IntegerNode *root = &node5;
   Try{
@@ -80,9 +83,9 @@ void testavlAddInteger_given_node5_add_node1(void){
  *   5                        5    20
  */
 void testavlAddInteger_given_10_5_add_20(void){
-  initNode(&node10, &node5, NULL,-1);
-  initNode(&node5, NULL, NULL, 0);
-  initNode(&node20, NULL, NULL, 0);
+  initNodeInt(&node10, &node5, NULL,-1);
+  initNodeInt(&node5, NULL, NULL, 0);
+  initNodeInt(&node20, NULL, NULL, 0);
 
   IntegerNode *root = &node10;
   Try{
@@ -103,9 +106,9 @@ void testavlAddInteger_given_10_5_add_20(void){
  *                               node10
  */
 void testavlAddInteger_given_node1_node5_add_node10(void){
-  initNode(&node1, NULL, &node5, 1);
-  initNode(&node5, NULL, NULL, 0);
-  initNode(&node10, NULL, NULL, 0);
+  initNodeInt(&node1, NULL, &node5, 1);
+  initNodeInt(&node5, NULL, NULL, 0);
+  initNodeInt(&node10, NULL, NULL, 0);
 
   IntegerNode *root = &node1;
   Try{
@@ -128,10 +131,10 @@ void testavlAddInteger_given_node1_node5_add_node10(void){
  *                        node1  (0)
  */
 void testavlAddInteger_given_node10_node5_add_node1(void){
-  initNode(&node10, &node5, NULL, -1);
+  initNodeInt(&node10, &node5, NULL, -1);
 
-  initNode(&node5, NULL, NULL, 0);
-  initNode(&node1, &node1, &node1, 0);
+  initNodeInt(&node5, NULL, NULL, 0);
+  initNodeInt(&node1, &node1, &node1, 0);
 
   IntegerNode *root = &node10;
   Try{
@@ -153,9 +156,9 @@ void testavlAddInteger_given_node10_node5_add_node1(void){
  *                             node10
  */
 void testavlAddInteger_given_node15_node5_add_node10(void){
-  initNode(&node15, &node5, NULL, -1);
-  initNode(&node5, NULL, NULL, 0);
-  initNode(&node10, NULL, NULL, 0);
+  initNodeInt(&node15, &node5, NULL, -1);
+  initNodeInt(&node5, NULL, NULL, 0);
+  initNodeInt(&node10, NULL, NULL, 0);
 
   IntegerNode *root = &node15;
   Try{
@@ -179,9 +182,9 @@ void testavlAddInteger_given_node15_node5_add_node10(void){
  *
  */
 void testavlAddInteger_given_node5_node15_add_node10_expect_rotateRL(void){
-  initNode(&node5, NULL, &node15, 1);
-  initNode(&node15, NULL, NULL, 0);
-  initNode(&node10, NULL, NULL, 0);
+  initNodeInt(&node5, NULL, &node15, 1);
+  initNodeInt(&node15, NULL, NULL, 0);
+  initNodeInt(&node10, NULL, NULL, 0);
 
   IntegerNode *root = &node5;
   Try{
@@ -205,12 +208,12 @@ void testavlAddInteger_given_node5_node15_add_node10_expect_rotateRL(void){
 *
  */
 void testavlAddInteger_parent_noHeightChanged_add_10(void){
-  initNode(&node5, &node1, &node15, 1);
-  initNode(&node15, NULL, &node20, 1);
-  initNode(&node1, NULL, NULL, 0);
-  initNode(&node20, NULL, NULL, 0);
+  initNodeInt(&node5, &node1, &node15, 1);
+  initNodeInt(&node15, NULL, &node20, 1);
+  initNodeInt(&node1, NULL, NULL, 0);
+  initNodeInt(&node20, NULL, NULL, 0);
 
-  initNode(&node10, NULL, NULL, 0);
+  initNodeInt(&node10, NULL, NULL, 0);
 
   IntegerNode *root = &node5;
   Try{
@@ -240,11 +243,11 @@ void testavlAddInteger_parent_noHeightChanged_add_10(void){
  *
  */
 void testavlAddInteger_given_above_expect_rotateRL(void){
-  initNode(&node5, &node1, &node10, 1);
-  initNode(&node10, NULL, &node20, 1);
-  initNode(&node1, NULL, NULL, 0);
-  initNode(&node20, NULL, NULL, 0);
-  initNode(&node15, NULL, NULL, 0);
+  initNodeInt(&node5, &node1, &node10, 1);
+  initNodeInt(&node10, NULL, &node20, 1);
+  initNodeInt(&node1, NULL, NULL, 0);
+  initNodeInt(&node20, NULL, NULL, 0);
+  initNodeInt(&node15, NULL, NULL, 0);
 
   IntegerNode *root = &node5;
   Try{
@@ -276,15 +279,15 @@ void testavlAddInteger_given_above_expect_rotateRL(void){
  *
  */
 void testavlAddInteger_given_above_expect_rotateRL__with_2_parents(void){
-  initNode(&node3, &node2, &node5, 1);
-  initNode(&node2, &node1, NULL, -1);
-  initNode(&node5, &node4, &node10, 1);
-  initNode(&node10, NULL, &node20, 1);
-  initNode(&node1, NULL, NULL, 0);
-  initNode(&node20, NULL, NULL, 0);
-  initNode(&node4, NULL, NULL, 0);
+  initNodeInt(&node3, &node2, &node5, 1);
+  initNodeInt(&node2, &node1, NULL, -1);
+  initNodeInt(&node5, &node4, &node10, 1);
+  initNodeInt(&node10, NULL, &node20, 1);
+  initNodeInt(&node1, NULL, NULL, 0);
+  initNodeInt(&node20, NULL, NULL, 0);
+  initNodeInt(&node4, NULL, NULL, 0);
 
-  initNode(&node15, NULL, NULL, 0);
+  initNodeInt(&node15, NULL, NULL, 0);
 
   IntegerNode *root = &node3;
   Try{
@@ -310,11 +313,11 @@ void testavlAddInteger_given_above_expect_rotateRL__with_2_parents(void){
  *          node20
  */
 void testavlAddInteger_withExistingValue(void){
-  initNode(&node5, &node1, &node10, 1);
-  initNode(&node10, NULL, &node20, 1);
-  initNode(&node1, NULL, NULL, 0);
-  initNode(&node20, NULL, NULL, 0);
-  initNode(&node15, NULL, NULL, 0);
+  initNodeInt(&node5, &node1, &node10, 1);
+  initNodeInt(&node10, NULL, &node20, 1);
+  initNodeInt(&node1, NULL, NULL, 0);
+  initNodeInt(&node20, NULL, NULL, 0);
+  initNodeInt(&node15, NULL, NULL, 0);
   IntegerNode *root = &node5;
   Try
   {

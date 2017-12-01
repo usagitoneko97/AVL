@@ -8,6 +8,9 @@
 #include "CException.h"
 #include "AvlInteger.h"
 #include "AvlString.h"
+
+#define initNodeStr(node, left, right, bf)  initNode((Node*)node, (Node*)left, (Node*)right, bf)
+
 void setUp(void)
 {
 }
