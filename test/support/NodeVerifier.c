@@ -20,7 +20,7 @@ char *createMessage(char *message, ...){
   return buffer;
 }
 
-void testAssertEqualNode(IntegerNode *node, IntegerNode *left, IntegerNode *right, int balanceFactor, int lineNo)
+void testAssertEqualNode(Node *node, Node *left, Node *right, int balanceFactor, int lineNo)
 {
   char *error;
   if(left != NULL){

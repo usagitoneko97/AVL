@@ -11,6 +11,7 @@ struct IntegerNode
     int data;
 };
 
+#define avlAddInteger(root, nodeToAdd)  _avlAdd((Node **)root, (Node *)nodeToAdd, compareInt)
 int compareInt(Node *node1, Node *node2);
 int compareIntwithVoidPtr(void *data1, Node *data2);
 #endif // _AVLINTEGER_H

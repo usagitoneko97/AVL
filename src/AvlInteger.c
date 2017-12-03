@@ -1,7 +1,7 @@
 #include "AvlInteger.h"
-/** 
+/**
  * @brief  return 1 when node > data
- * @note   
+ * @note
  * @param  *node: node to compare
  * @param  *data: data to compare
  * @retval result

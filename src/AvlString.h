@@ -1,6 +1,7 @@
 #ifndef _AVLSTRING_H
 #define _AVLSTRING_H
 
+#include "Node.h"
 typedef struct StrNode StrNode;
 struct StrNode
 {
@@ -10,5 +11,6 @@ struct StrNode
     char *data;
 };
 
-int compareStr(char *str1, char *str2);
+#define avlAddString(root, nodeToAdd)   _avlAdd((Node **)root, (Node*)nodeToAdd, compareStr)
+int compareStr(Node *str1, Node *str2);
 #endif // _AVLSTRING_H
