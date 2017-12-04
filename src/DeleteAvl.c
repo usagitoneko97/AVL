@@ -10,10 +10,10 @@
  * @retval non null: the deleted value
  *         null    : data to be deleted doesn't exost in the avl tree
  */
-Node *avlRemove(Node **rootPtr, int data, CompareWithVoidPtr compare)
+Node *avlRemove(Node **rootPtr, void* data, CompareWithVoidPtr compare)
 {
     int heightChangedTemp;
-    Node *deletedNode = _avlRemove(rootPtr, &data, &heightChangedTemp, compare);
+    Node *deletedNode = _avlRemove(rootPtr, data, &heightChangedTemp, compare);
     if(deletedNode == NULL){
         printf("deleted value doesn't exist!");
     }

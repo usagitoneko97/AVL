@@ -2,6 +2,7 @@
 #define _AVLSTRING_H
 
 #include "Node.h"
+#include "AddAvl.h"
 typedef struct StrNode StrNode;
 struct StrNode
 {
@@ -11,6 +12,7 @@ struct StrNode
     char *data;
 };
 
-#define avlAddString(root, nodeToAdd)   _avlAdd((Node **)root, (Node*)nodeToAdd, compareStr)
-int compareStr(Node *str1, Node *str2);
+#define avlAddString(root, nodeToAdd)                   _avlAdd((Node **)root, (Node *)nodeToAdd, compareStrVoidPtr)
+#define avlRemoveStringWithValue(root, strToDelete)    avlRemove((Node **)root, (void*)strToDelete, compareStrVoidPtr)
+int compareStrVoidPtr(void *str1, Node *str2);
 #endif // _AVLSTRING_H

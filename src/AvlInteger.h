@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include "AddAvl.h"
+#include "DeleteAvl.h"
 typedef struct IntegerNode IntegerNode;
 struct IntegerNode
 {
@@ -12,7 +13,8 @@ struct IntegerNode
     int data;
 };
 
-#define avlRemoveIntegerWithValue(root, data) avlRemove((Node **)root, data, compareIntwithVoidPtr)
+// #define avlRemoveIntegerWithValue(root, data) avlRemove((Node **)root, (void*)&data, compareIntwithVoidPtr)
+Node *avlRemoveIntegerWithValue(IntegerNode **root, int data);
 int avlAddInteger(IntegerNode **root, IntegerNode *nodeToAdd);
 int compareInt(Node *node1, Node *node2);
 int compareIntwithVoidPtr(void *data1, Node *data2);

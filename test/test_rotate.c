@@ -6,6 +6,7 @@
 #include "AvlInteger.h"
 #include "AddAvl.h"
 #include "Exception.h"
+#include "DeleteAvl.h"
 
 #define _rotateRight(node)            rotateRight((Node*)node)
 #define _rotateRightLeft(node)        rotateRightLeft((Node *)node)

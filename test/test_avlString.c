@@ -8,6 +8,7 @@
 #include "CException.h"
 #include "AvlInteger.h"
 #include "AvlString.h"
+#include "DeleteAvl.h"
 
 #define initNodeStr(node, left, right, bf)  initNode((Node*)node, (Node*)left, (Node*)right, bf)
 
@@ -21,12 +22,11 @@ void tearDown(void)
 {
 }
 
-void xtest_avlString_cmp_ali_abu(void){
+void test_avlString_cmp_ali_abu(void){
 
-  Node *nodeAliNode = (Node*)&nodeAli;
+  char *ali = "Ali";
   Node *nodeAbuNode = (Node*)&nodeAbu;
-  TEST_ASSERT_EQUAL(1, compareStr(nodeAliNode, nodeAbuNode));
-
+  TEST_ASSERT_EQUAL(1, compareStrVoidPtr((void*)ali, nodeAbuNode));
 }
 
 /**
@@ -35,7 +35,7 @@ void xtest_avlString_cmp_ali_abu(void){
 *                                /  \
 *                              Abu  Baba
 */
-void xtest_add_ali_abu_baba_to_NULL_expect_balancedTree(void){
+void test_add_ali_abu_baba_to_NULL_expect_balancedTree(void){
   StrNode *root = NULL;
   Try{
     avlAddString(&root, &nodeAli);
@@ -55,7 +55,7 @@ void xtest_add_ali_abu_baba_to_NULL_expect_balancedTree(void){
 *                                 \
 *                                  Hgx
 */
-void xtest_add_ali_baba_hgx_to_NULL_expect_balancedTree(void){
+void test_add_ali_baba_hgx_to_NULL_expect_balancedTree(void){
   StrNode *root = NULL;
   Try{
     avlAddString(&root, &nodeAli);
@@ -66,4 +66,27 @@ void xtest_add_ali_baba_hgx_to_NULL_expect_balancedTree(void){
   }
 
   TEST_ASSERT_EQUAL_NODE(&nodeBaba, &nodeAli, &nodeHgx, 0);
+}
+
+
+/** 
+ *     Baba   delete Ali   Baba
+ *    /  \      ---->        \
+ *  Ali  Hgx                 Hgx
+ */
+void test_delete_ali_baba_hgx_delete_baba_expect_balanceTree(void){
+  StrNode *root = NULL;
+  Try
+  {
+    avlAddString(&root, &nodeAli);
+    avlAddString(&root, &nodeBaba);
+    avlAddString(&root, &nodeHgx);
+    avlRemoveStringWithValue(&root, "Ali");
+    
+  }
+  Catch(ex)
+  {
+    dumpException(ex);
+  }
+  TEST_ASSERT_EQUAL_NODE(&nodeBaba, NULL, &nodeHgx, 1);
 }

@@ -8,7 +8,7 @@
 #include "CException.h"
 #include "AvlInteger.h"
 #include "AvlString.h"
-
+#include "DeleteAvl.h"
 CEXCEPTION_T ex;
 int heightChanged;
 

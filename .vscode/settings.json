@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "node.h": "c",
-        "avlinteger.h": "c"
+        "avlinteger.h": "c",
+        "avlstring.h": "c",
+        "deleteavl.h": "c"
     }
 }

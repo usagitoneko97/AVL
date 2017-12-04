@@ -23,5 +23,9 @@ int compareIntwithVoidPtr(void *data1, Node *data2)
 int avlAddInteger(IntegerNode **root, IntegerNode *nodeToAdd){
     Node *_nodeToAdd = (Node *)nodeToAdd;
     _nodeToAdd->data = &(nodeToAdd->data);
-    _avlAdd((Node **)root, _nodeToAdd, compareIntwithVoidPtr);
+    return _avlAdd((Node **)root, _nodeToAdd, compareIntwithVoidPtr);
+}
+
+Node *avlRemoveIntegerWithValue(IntegerNode **root, int data){
+    return avlRemove((Node **)root, (void *)&data, compareIntwithVoidPtr);
 }

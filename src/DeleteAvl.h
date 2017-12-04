@@ -3,7 +3,7 @@
 
 #include "Node.h"
 Node *avlRemoveNearestLeft(Node **rootPtr, int *heightChangedStatus);
-Node *avlRemove(Node **rootPtr, int data, CompareWithVoidPtr compare);
+Node *avlRemove(Node **rootPtr, void *data, CompareWithVoidPtr compare);
 Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, CompareWithVoidPtr compare);
 
 
