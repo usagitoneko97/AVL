@@ -14,5 +14,6 @@ struct StrNode
 
 #define avlAddString(root, nodeToAdd)                   _avlAdd((Node **)root, (Node *)nodeToAdd, compareStrVoidPtr)
 #define avlRemoveStringWithValue(root, strToDelete)    avlRemove((Node **)root, (void*)strToDelete, compareStrVoidPtr)
+
 int compareStrVoidPtr(void *str1, Node *str2);
 #endif // _AVLSTRING_H

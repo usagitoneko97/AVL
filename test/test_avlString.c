@@ -22,13 +22,35 @@ void tearDown(void)
 {
 }
 
-void test_avlString_cmp_ali_abu(void){
+void test_avlString_cmp_ali_abu_expect_ali_greater_than_abu_return_1(void){
 
   char *ali = "Ali";
   Node *nodeAbuNode = (Node*)&nodeAbu;
   TEST_ASSERT_EQUAL(1, compareStrVoidPtr((void*)ali, nodeAbuNode));
 }
 
+void test_avlString_cmp_abuBaba_abu_expect_abuBaba_greater_than_abu_return_1(void)
+{
+
+  char *ali = "AbuBaba";
+  Node *nodeAbuNode = (Node *)&nodeAbu;
+  TEST_ASSERT_EQUAL(1, compareStrVoidPtr((void *)ali, nodeAbuNode));
+}
+
+void test_avlString_cmp_abu_abu_expect_same_return_0(void)
+{
+
+  char *ali = "Abu";
+  Node *nodeAbuNode = (Node *)&nodeAbu;
+  TEST_ASSERT_EQUAL(0, compareStrVoidPtr((void *)ali, nodeAbuNode));
+}
+
+void test_avlString_cmp_Aakaikoen_abu_expect_Aakaikoen_smaller_than_abu_return_m1(void)
+{
+  char *ali = "Aakaikoen";
+  Node *nodeAbuNode = (Node *)&nodeAbu;
+  TEST_ASSERT_EQUAL(-1, compareStrVoidPtr((void *)ali, nodeAbuNode));
+}
 /**
        add Ali, Abu, Baba
 *  NULL       --->                Ali
