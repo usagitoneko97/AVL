@@ -11,7 +11,8 @@ int heightChanged;
  * @param  *NodeToAdd: Node structure to add
  * @retval height change status of the avl tree after addition
  */
-int _avlAdd(Node **rootPtr, Node *NodeToAdd, Compare compare){
+int _avlAdd(Node **rootPtr, Node *NodeToAdd, CompareWithVoidPtr compare)
+{
   if(*(rootPtr) == NULL){
     NodeToAdd->left = NULL;
     NodeToAdd->right = NULL;
@@ -20,7 +21,7 @@ int _avlAdd(Node **rootPtr, Node *NodeToAdd, Compare compare){
     return CHANGED;
   }
   else{
-    if(compare(NodeToAdd, *rootPtr) == 1)
+    if(compare(NodeToAdd->data, *rootPtr) == 1)
     {
       heightChanged = _avlAdd(&(*(rootPtr))->right, NodeToAdd, compare);
       // (*rootPtr)->right = (*rootPtr);
@@ -48,7 +49,7 @@ int _avlAdd(Node **rootPtr, Node *NodeToAdd, Compare compare){
         return CHANGED;
       }
     }
-    else if(compare(NodeToAdd, *rootPtr) == -1)
+    else if(compare(NodeToAdd->data, *rootPtr) == -1)
     {
       heightChanged = _avlAdd(&(*(rootPtr))->left, NodeToAdd, compare);
       if(heightChanged == CHANGED){
@@ -79,6 +80,7 @@ int _avlAdd(Node **rootPtr, Node *NodeToAdd, Compare compare){
   }
 }
 
-void avlAdd(Node **root, Node *NodeToAdd, Compare compare){
+void avlAdd(Node **root, Node *NodeToAdd, CompareWithVoidPtr compare)
+{
   _avlAdd(root, NodeToAdd, compare);
 }

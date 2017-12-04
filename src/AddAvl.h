@@ -3,9 +3,8 @@
 
 #include "Node.h"
 
-
-int _avlAdd(Node **root, Node *nodeToAdd, Compare compare);
-void avlAdd(Node **root, Node *NodeToAdd, Compare compare);
+int _avlAdd(Node **root, Node *nodeToAdd, CompareWithVoidPtr compare);
+void avlAdd(Node **root, Node *NodeToAdd, CompareWithVoidPtr compare);
 int avlBalanceLeftTree(Node **rootPtr);
 int avlBalanceRightTree(Node **rootPtr);
 

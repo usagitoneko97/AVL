@@ -36,7 +36,7 @@ void initIntegerNodeData(void){
   node23.data = 23;
 }
 
-void initNode(Node *node, Node *left, Node *right, int balanceFactor)
+void _initNode(Node *node, Node *left, Node *right, int balanceFactor)
 {
   node->left = left;
   node->right = right;

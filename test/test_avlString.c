@@ -21,7 +21,7 @@ void tearDown(void)
 {
 }
 
-void test_avlString_cmp_ali_abu(void){
+void xtest_avlString_cmp_ali_abu(void){
 
   Node *nodeAliNode = (Node*)&nodeAli;
   Node *nodeAbuNode = (Node*)&nodeAbu;
@@ -35,7 +35,7 @@ void test_avlString_cmp_ali_abu(void){
 *                                /  \
 *                              Abu  Baba
 */
-void test_add_ali_abu_baba_to_NULL_expect_balancedTree(void){
+void xtest_add_ali_abu_baba_to_NULL_expect_balancedTree(void){
   StrNode *root = NULL;
   Try{
     avlAddString(&root, &nodeAli);
@@ -55,7 +55,7 @@ void test_add_ali_abu_baba_to_NULL_expect_balancedTree(void){
 *                                 \
 *                                  Hgx
 */
-void test_add_ali_baba_hgx_to_NULL_expect_balancedTree(void){
+void xtest_add_ali_baba_hgx_to_NULL_expect_balancedTree(void){
   StrNode *root = NULL;
   Try{
     avlAddString(&root, &nodeAli);

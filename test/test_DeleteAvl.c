@@ -5,6 +5,8 @@
 #include "rotate.h"
 #include "Node.h"
 #include "AvlInteger.h"
+#include "AddAvl.h"
+#include "Exception.h"
 void setUp(void)
 {
     initIntegerNodeData();

@@ -4,6 +4,8 @@
 #include "NodeHelper.h"
 #include "NodeVerifier.h"
 #include "AvlInteger.h"
+#include "AddAvl.h"
+#include "Exception.h"
 
 #define _rotateRight(node)            rotateRight((Node*)node)
 #define _rotateRightLeft(node)        rotateRightLeft((Node *)node)

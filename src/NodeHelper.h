@@ -12,6 +12,8 @@ IntegerNode node45, node50, node55, node60, node70;
 StrNode nodeAli, nodeAbu, nodeBaba, nodeHgx, nodeJason;
 void initIntegerNodeData(void);
 void initStringNodeData(void);
-void initNode(Node *node, Node *left, Node *right, int balanceFactor);
+void _initNode(Node *node, Node *left, Node *right, int balanceFactor);
+
+#define initNode(n, l, r, bf)     _initNode((Node *)n, (Node *)l, (Node *)r, bf);
 
 #endif // _NODEHELPER_H
