@@ -3,6 +3,7 @@
         "node.h": "c",
         "avlinteger.h": "c",
         "avlstring.h": "c",
-        "deleteavl.h": "c"
+        "deleteavl.h": "c",
+        "nodehelper.h": "c"
     }
 }

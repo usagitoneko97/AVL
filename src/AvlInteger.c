@@ -1,19 +1,14 @@
 #include "AvlInteger.h"
-#include "stdlib.h"
-#include "malloc.h"
-#include "string.h"
-
 
 int compareIntwithVoidPtr(void *data1, Node *data2)
 {
-    int data2Int = (int)(data2->data);
-    int *data1int = (int*)data1;
+    int data1int = (int)data1;
     IntegerNode *intNode2 = (IntegerNode *)data2;
-    if (*data1int > data2Int)
+    if (data1int > intNode2->data)
     {
         return 1;
     }
-    else if (*data1int < data2Int)
+    else if (data1int < intNode2->data)
     {
         return -1;
     }
@@ -23,16 +18,14 @@ int compareIntwithVoidPtr(void *data1, Node *data2)
     }
 }
 
-int avlAddInteger(IntegerNode **root, IntegerNode *nodeToAdd){
-    int data = nodeToAdd->data;
+int avlAddInteger(IntegerNode **root, IntegerNode *nodeToAdd)
+{
     Node *_nodeToAdd = (Node *)nodeToAdd;
-    
-    _nodeToAdd->data = (void*)malloc(sizeof(int));
-    *(int*)(_nodeToAdd->data) = data;
-    
+    // _nodeToAdd->data = &(nodeToAdd->data);
     return _avlAdd((Node **)root, _nodeToAdd, compareIntwithVoidPtr);
 }
 
-Node *avlRemoveIntegerWithValue(IntegerNode **root, int data){
-    return avlRemove((Node **)root, (void *)&data, compareIntwithVoidPtr);
+Node *avlRemoveIntegerWithValue(IntegerNode **root, int data)
+{
+    return avlRemove((Node **)root, (void *)data, compareIntwithVoidPtr);
 }

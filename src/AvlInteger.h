@@ -10,7 +10,7 @@ struct IntegerNode
     IntegerNode *left;
     IntegerNode *right;
     int balanceFactor;
-    int data;
+    long long data;
 };
 
 // #define avlRemoveIntegerWithValue(root, data) avlRemove((Node **)root, (void*)&data, compareIntwithVoidPtr)

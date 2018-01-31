@@ -12,6 +12,14 @@
 
 #define initNodeStr(node, left, right, bf)  initNode((Node*)node, (Node*)left, (Node*)right, bf)
 
+IntegerNode node2, node3, node4, node7, node10Clone;
+IntegerNode node1, node5, node10, node15, node20, node25, node30, node35, node40, node23;
+IntegerNode node45, node50, node55, node60, node70, node10Clone;
+Node node1000, node2500, node4000, node5000, node5500;
+Node node500, node600, node500, node600;
+
+StrNode nodeAli, nodeAbu, nodeBaba, nodeHgx, nodeJason;
+
 CEXCEPTION_T ex;
 void setUp(void)
 {
