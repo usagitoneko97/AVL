@@ -41,7 +41,7 @@ Node *avlRemoveNearestLeft(Node **rootPtr, int *heightChangedStatus){
             *heightChangedStatus = avlBalanceLeftTree(rootPtr);
         }
         else{
-            return NO_CHANGED;
+            return tempNode;
         }
         if (tempNode != NULL && tempNode->left != NULL)
         {

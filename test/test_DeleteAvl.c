@@ -547,13 +547,13 @@ void test_avl_functional_test(void)
 
 void test_avl_functional_test2(void)
 {
-    node1000.data = 1000;
-    node2500.data = 2500;
-    node4000.data = 4000;
-    node5000.data = 5000;
-    node5500.data = 5500;
-    node500.data = 500;
-    node600.data = 600;
+    node1000.data = (void *)1000;
+    node2500.data = (void *)2500;
+    node4000.data = (void *)4000;
+    node5000.data = (void *)5000;
+    node5500.data = (void *)5500;
+    node500.data = (void *)500;
+    node600.data = (void *)600;
     IntegerNode *root = NULL;
     initNode(&node1000, NULL, NULL, 0);
     initNode(&node2500, NULL, NULL, 0);
@@ -570,13 +570,13 @@ void test_avl_functional_test2(void)
     initTestNode(&node5500, 5500);    
     initTestNode(&node500, 500);    
 */    
-    avlAddInteger(&root, &node1000);
-    avlAddInteger(&root, &node2500);
-    avlAddInteger(&root, &node4000);
-    avlAddInteger(&root, &node5000);
-    avlAddInteger(&root, &node5500);
-    avlAddInteger(&root, &node500);
-    avlAddInteger(&root, &node600);
+    avlAddInteger(&root, (IntegerNode *)&node1000);
+    avlAddInteger(&root, (IntegerNode *)&node2500);
+    avlAddInteger(&root, (IntegerNode *)&node4000);
+    avlAddInteger(&root, (IntegerNode *)&node5000);
+    avlAddInteger(&root, (IntegerNode *)&node5500);
+    avlAddInteger(&root, (IntegerNode *)&node600);
+    avlAddInteger(&root, (IntegerNode *)&node500);
 
     /*    
     printf("Start of my tests\n");
@@ -585,15 +585,4 @@ void test_avl_functional_test2(void)
     avlRemoveIntegerWithValue(&root, 1500);
     avlRemoveIntegerWithValue(&root, 2000);
 */
-}
-
-void xtest_test(void){
-    node500.data = 500;
-    printf("IntegerNode prev: %d", node500.data);
-    IntegerNode *node500Test = (IntegerNode*)&node500;
-    printf("IntegerNode : %d", node500Test->data);
-
-    void *data = 500;
-    int dataTest = (int)data;
-    printf("data test is %d", dataTest);
 }
