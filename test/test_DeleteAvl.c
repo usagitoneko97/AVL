@@ -12,6 +12,8 @@ IntegerNode node2, node3, node4, node7, node10Clone;
 IntegerNode node1, node5, node10, node15, node20, node25, node30, node35, node40, node23;
 IntegerNode node45, node50, node55, node60, node70;
 
+IntegerNode node65, node75, node80, node90, node100, node120, node150, node200, node250;
+
 Node node500, node600, node500, node600;
 Node node1000, node2500, node4000, node5000, node5500;
 StrNode nodeAli, nodeAbu, nodeBaba, nodeHgx, nodeJason;
@@ -585,4 +587,212 @@ void test_avl_functional_test2(void)
     avlRemoveIntegerWithValue(&root, 1500);
     avlRemoveIntegerWithValue(&root, 2000);
 */
+}
+
+/**
+  * After insert --->         25(1)       Remove 50 --->      25(1)
+  *                         /   \                           /   \
+  *                       1      50                       1      40(1)
+  *                             /  \                               \  
+  *                           40    55                              55
+  *
+  **/
+
+void test_Insert_Add_1_25_40_50_55_And_Remove_50(void){
+  initNode(&node1,NULL,NULL,0);
+  initNode(&node25,NULL,NULL,0);
+  initNode(&node40,NULL,NULL,0);
+  initNode(&node50,NULL,NULL,0);
+  initNode(&node55,NULL,NULL,0);
+  IntegerNode *root = NULL;
+  avlAddInteger(&root,&node1);
+  avlAddInteger(&root,&node25);
+  avlAddInteger(&root,&node40);
+  avlAddInteger(&root,&node50);
+  avlAddInteger(&root,&node55);
+  TEST_ASSERT_EQUAL_PTR(&node25,root);
+  TEST_ASSERT_EQUAL_NODE(&node25,&node1,&node50, 1);
+  TEST_ASSERT_EQUAL_NODE(&node50,&node40, &node55, 0);
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL, 0);
+  TEST_ASSERT_EQUAL_NODE(&node55, NULL,NULL,0);
+  avlRemoveIntegerWithValue(&root,50);
+  TEST_ASSERT_EQUAL_NODE(&node25,&node1,&node40, 1);
+  TEST_ASSERT_EQUAL_NODE(&node40, NULL, &node55, 1);
+  TEST_ASSERT_EQUAL_NODE(&node1, NULL, NULL,0);
+  TEST_ASSERT_EQUAL_NODE(&node55, NULL, NULL, 0);
+}
+
+/**
+  *                                         75
+  *                                      /     \
+  *                                   50        120
+  *                                /    \       /   \
+  *                             25      60     90     200
+  *                           /  \     /  \   /  \    /  \
+  *                         1    40  55   65 80  100 150  250
+  *
+  *
+  *
+  *
+  *
+  **/
+
+void test_AddNRemove_of_15_Nodes(void){
+  initNode(&node1,NULL,NULL,0);
+  initNode(&node25,NULL,NULL,0);
+  initNode(&node40,NULL,NULL,0);
+  initNode(&node50,NULL,NULL,0);
+  initNode(&node55,NULL,NULL,0);
+  initNode(&node60,NULL,NULL,0);
+  initNode(&node65,NULL,NULL,0);
+  initNode(&node75,NULL,NULL,0);
+  initNode(&node80,NULL,NULL,0);
+  initNode(&node90,NULL,NULL,0);
+  initNode(&node100,NULL,NULL,0);
+  initNode(&node120,NULL,NULL,0);
+  initNode(&node150,NULL,NULL,0);
+  initNode(&node200,NULL,NULL,0);
+  initNode(&node250,NULL,NULL,0);
+  IntegerNode *root = NULL;
+  avlAddInteger(&root,&node1);
+  avlAddInteger(&root,&node25);
+  avlAddInteger(&root,&node40);
+  avlAddInteger(&root,&node50);
+  avlAddInteger(&root,&node55);
+  avlAddInteger(&root,&node60);
+  avlAddInteger(&root,&node65);
+  avlAddInteger(&root,&node75);
+  avlAddInteger(&root,&node80);
+  avlAddInteger(&root,&node90);
+  avlAddInteger(&root,&node100);
+  avlAddInteger(&root,&node120);
+  avlAddInteger(&root,&node150);
+  avlAddInteger(&root,&node200);
+  avlAddInteger(&root,&node250);
+
+  TEST_ASSERT_EQUAL_PTR(&node75,root);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node50,&node120,0,&node75);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node90,&node200,0,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80,&node100,0,&node90);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node150,&node250,0,&node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node25,&node60,0,&node50);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1,&node40,0,&node25);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node55,&node65,0,&node60);
+
+  avlRemoveIntegerWithValue(&root,60);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node50,&node120,0,&node75);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node90,&node200,0,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80,&node100,0,&node90);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node150,&node250,0,&node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node25,&node55,0,&node50);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1,&node40,0,&node25);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL ,NULL,0,&node65);
+
+  avlRemoveIntegerWithValue(&root,150);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node50,&node120,0,&node75);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node90,&node200,0,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80,&node100,0,&node90);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,&node250 ,1, &node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node25,&node55,0, &node50);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, NULL, 0,&node65);
+
+  avlRemoveIntegerWithValue(&root,25);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node50,&node120,0,&node75);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node90,&node200,0,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80,&node100,0,&node90);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,&node250,1,&node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1,&node55,0,&node50);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,&node40,1,&node1);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, &node65,1,&node55);
+
+  avlRemoveIntegerWithValue(&root,90);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node50,&node120,0,&node75);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80,&node200,0,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, &node100, 1, &node80);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node100);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,&node250,1,&node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1,&node55,0,&node50);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, NULL, 0, &node40);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, NULL,0, &node65);
+
+  avlRemoveIntegerWithValue(&root,100);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, NULL, 0, &node80);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80,&node200,1,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node50,&node120,0,&node75);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, &node250,1,&node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1,&node55,0,&node50);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, NULL, 0, &node40);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, NULL, 0, &node65);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, NULL, 0, &node250);
+
+  avlRemoveIntegerWithValue(&root,50);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node40,&node120,0,&node75);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80,&node200,1,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,&node250,1,&node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, &node65, 1,&node55);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1, &node55, 1, &node40);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node65);
+
+  avlRemoveIntegerWithValue(&root,75);
+  TEST_ASSERT_EQUAL_PTR(&node65,root);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node40,&node120,1,&node65);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1,&node55,0 ,&node40);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80,&node200,1,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,&node250,1,&node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node1);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node55);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node80);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node250);
+
+  avlRemoveIntegerWithValue(&root,55);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node40, &node120, 1, &node65);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1, NULL, -1, &node40);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node80, &node200, 1, &node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, &node250, 1, &node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node1);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node80);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node250);
+
+  avlRemoveIntegerWithValue(&root,80);
+  TEST_ASSERT_EQUAL_PTR(&node65,root);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node40, &node200, 0, &node65);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1, NULL, -1, &node40);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node120, &node250, 0, &node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node1);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node250);
+
+  avlRemoveIntegerWithValue(&root,40);
+  TEST_ASSERT_EQUAL_PTR(&node65,root);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1, &node200, 1, &node65);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node120, &node250, 0, &node200);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node1);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node250);
+
+  avlRemoveIntegerWithValue(&root,200);
+  TEST_ASSERT_EQUAL_PTR(&node65,root);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1, &node120, 1, &node65);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, &node250, 1, &node120);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node1);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node250);
+
+  avlRemoveIntegerWithValue(&root,250);
+  TEST_ASSERT_EQUAL_PTR(&node65,root);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(&node1, &node120, 0, &node65);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node1);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node120);
+
+  avlRemoveIntegerWithValue(&root,65);
+  TEST_ASSERT_EQUAL_PTR(&node1,root);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL, &node120, 1, &node1);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node120);
+
+  avlRemoveIntegerWithValue(&root,120);
+  TEST_ASSERT_EQUAL_PTR(&node1,root);
+  TEST_ASSERT_EQUAL_NODE_REVERSED(NULL,NULL,0,&node1);
+
+  avlRemoveIntegerWithValue(&root,1);
+  TEST_ASSERT_EQUAL_PTR(NULL,root);
 }

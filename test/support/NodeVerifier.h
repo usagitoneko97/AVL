@@ -7,6 +7,9 @@
 #define TEST_ASSERT_EQUAL_NODE(node, left,right,balanceFactor) \
                   testAssertEqualNode((Node*)node, (Node*)left,(Node*)right,balanceFactor,__LINE__)
 
+#define TEST_ASSERT_EQUAL_NODE_REVERSED(left, right,balanceFactor, node) \
+                  testAssertEqualNode((Node*)node, (Node*)left,(Node*)right,balanceFactor,__LINE__)				  
+
 
 void testAssertEqualNode(Node *node, Node *left, Node *right, int balanceFactor, int lineNo);
 

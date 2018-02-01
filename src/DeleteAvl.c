@@ -153,6 +153,14 @@ Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, CompareWi
         if (*heightChangedStatus == CHANGED)
         {
             (*rootPtr)->balanceFactor--;
+            if((*rootPtr)->balanceFactor == -1){
+                *heightChangedStatus = NO_CHANGED;
+                return temp;
+            }
+            else if((*rootPtr)->balanceFactor == 0){
+                *heightChangedStatus = CHANGED;
+                return temp;
+            }
             *heightChangedStatus = avlBalanceLeftTree(rootPtr);
             
         }
@@ -166,6 +174,14 @@ Node *_avlRemove(Node **rootPtr, void *data, int *heightChangedStatus, CompareWi
         if (*heightChangedStatus == CHANGED)
         {
             (*rootPtr)->balanceFactor++;
+            if((*rootPtr)->balanceFactor == 1){
+                *heightChangedStatus = NO_CHANGED;
+                return temp;
+            }
+            else if((*rootPtr)->balanceFactor == 0){
+                *heightChangedStatus = CHANGED;
+                return temp;
+            }
             *heightChangedStatus = avlBalanceRightTree(rootPtr);
         }
         else

@@ -30,6 +30,16 @@ void initIntegerNodeData(void)
   node60.data = 60;
   node70.data = 70;
   node23.data = 23;
+  node65.data = 65;
+  node75.data = 75;
+  node80.data = 80;
+  node90.data = 90;
+  node100.data = 100;
+  node120.data = 120;
+  node150.data = 150;
+  node200.data = 200;
+  node250.data = 250;
+  
   node10Clone.data = 10;
 }
 
